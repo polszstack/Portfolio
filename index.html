@@ -355,11 +355,11 @@
               John Paul Corre
             </h1>
             <p class="text-xl md:text-2xl gradient-text mt-2 font-semibold">
-              Full-Stack Developer · PHP · Vue · MySQL
+              Full-Stack Developer · PHP · Vue · Python
             </p>
             <p class="mt-5 text-[#cdd2df] max-w-xl mx-auto leading-relaxed text-base">
               Passionate about building dynamic web applications with clean code. 
-              I blend modern JavaScript frameworks with robust PHP backends. 
+              I blend modern JavaScript frameworks with robust PHP & Python backends. 
               Currently seeking an internship to contribute to real-world products.
             </p>
             <div class="flex flex-wrap gap-4 mt-8 justify-center">
@@ -374,13 +374,13 @@
         </div>
       </section>
 
-      <!-- Tech Stack Section - higher contrast inside cards -->
+      <!-- Tech Stack Section - Updated with all 13 technologies -->
       <section id="techstack" class="py-20 section-mid border-y border-[#363c44]">
         <div class="max-w-6xl mx-auto px-4">
           <h2 class="text-3xl md:text-4xl font-bold section-title">
             <i class="fas fa-microchip text-[#c7a16b] mr-2"></i> Tech Stack
           </h2>
-          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-5 mt-10">
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 mt-10">
             <div v-for="tech in technologies" :key="tech.name" 
                  class="metal-card rounded-2xl p-5 text-center card-hover flex flex-col items-center justify-center gap-3 transition-all">
               <i :class="tech.icon" class="text-4xl" :style="{ color: tech.color, filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))' }"></i>
@@ -516,7 +516,7 @@
             <i class="fas fa-envelope-open-text text-[#c7a16b] mr-2"></i> Get in touch
           </h2>
           <p class="text-[#cdd2df] mt-5 max-w-xl mx-auto text-base leading-relaxed">
-            I'm excited about internship opportunities where I can leverage PHP, JavaScript, and modern frameworks.
+            I'm excited about internship opportunities where I can leverage PHP, JavaScript, Python, and modern frameworks.
             Drop me a message!
           </p>
           <div class="mt-10 metal-card-light rounded-2xl shadow-2xl p-7 md:p-8 max-w-lg mx-auto">
@@ -548,7 +548,7 @@
     <footer class="bg-[#12151a] border-t border-[#2c2f38] py-6 text-center text-[#8a919f] text-sm">
       <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center">
         <p>&copy; 2025 John Paul Corre – built with Vue & Tailwind</p>
-        <p class="mt-2 sm:mt-0 font-medium">PHP · HTML · CSS · JS · MySQL</p>
+        <p class="mt-2 sm:mt-0 font-medium">PHP · Python · JavaScript · MySQL</p>
       </div>
     </footer>
   </div>
@@ -562,15 +562,18 @@
           mobileMenuOpen: false,
           technologies: [
             { name: 'PHP', icon: 'fab fa-php', color: '#99a9d4', level: 'Backend' },
-            { name: 'HTML5', icon: 'fab fa-html5', color: '#f0652e', level: 'Markup' },
-            { name: 'CSS3', icon: 'fab fa-css3-alt', color: '#2c6fbb', level: 'Styling' },
-            { name: 'JavaScript', icon: 'fab fa-js-square', color: '#f7df1e', level: 'Dynamic' },
-            { name: 'MySQL', icon: 'fas fa-database', color: '#e09d5e', level: 'Database' },
+            { name: 'JavaScript', icon: 'fab fa-js-square', color: '#f7df1e', level: 'Language' },
+            { name: 'CSS', icon: 'fab fa-css3-alt', color: '#2c6fbb', level: 'Styling' },
+            { name: 'HTML', icon: 'fab fa-html5', color: '#f0652e', level: 'Markup' },
+            { name: 'Express.js', icon: 'fab fa-node-js', color: '#68a063', level: 'Framework' },
+            { name: 'Python', icon: 'fab fa-python', color: '#3776ab', level: 'Language' },
+            { name: 'FastAPI', icon: 'fas fa-bolt', color: '#009688', level: 'Framework' },
             { name: 'Vue.js', icon: 'fab fa-vuejs', color: '#6fbf73', level: 'Framework' },
-            { name: 'Tailwind', icon: 'fas fa-wind', color: '#6bc2f0', level: 'Utility' },
+            { name: 'MySQL', icon: 'fas fa-database', color: '#e09d5e', level: 'Database' },
             { name: 'Git', icon: 'fab fa-git-alt', color: '#f26522', level: 'Version' },
-            { name: 'REST APIs', icon: 'fas fa-plug', color: '#b0c1e0', level: 'Integration' },
-            { name: 'Figma', icon: 'fab fa-figma', color: '#c084fc', level: 'Design' },
+            { name: 'Node.js', icon: 'fab fa-node-js', color: '#68a063', level: 'Runtime' },
+            { name: 'Tailwind', icon: 'fas fa-wind', color: '#6bc2f0', level: 'CSS Framework' },
+            { name: 'Bootstrap', icon: 'fab fa-bootstrap', color: '#7952b3', level: 'CSS Framework' },
           ],
           projects: [
             {
