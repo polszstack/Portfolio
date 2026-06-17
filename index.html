@@ -19,7 +19,6 @@
       scroll-behavior: smooth;
     }
     
-    /* Enhanced contrast palette - deeper charcoal background with brighter, legible text */
     :root {
       --deep-charcoal: #121316;
       --gunmetal: #1c1e22;
@@ -33,7 +32,6 @@
       --platinum: #eceff5;
     }
     
-    /* Improve text contrast globally */
     body {
       background: #121316;
       color: #eef2f8;
@@ -47,7 +45,6 @@
       box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.6), 0 0 28px rgba(168, 137, 101, 0.12);
     }
     
-    /* Cover photo banner with better overlay for text contrast */
     .cover-banner {
       background: linear-gradient(160deg, #121316 0%, #1c1e22 20%, #24272c 40%, #5c4b35 70%, #363a42 100%);
       background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&q=80');
@@ -76,7 +73,6 @@
       border-radius: 0 0 36px 36px;
     }
     
-    /* Profile picture */
     .profile-container {
       position: relative;
       z-index: 10;
@@ -141,9 +137,26 @@
       border-radius: 20px 20px 0 0;
       font-size: 2.5rem;
       color: #e0e4ed;
+      position: relative;
+      overflow: hidden;
     }
     
-    /* About section with improved readability */
+    /* Subtle overlay on hover */
+    .project-image-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .card-hover:hover .project-image-overlay {
+      opacity: 1;
+    }
+    
     .about-section {
       background: linear-gradient(180deg, #24272c 0%, #181a1f 100%);
       border-radius: 30px 30px 0 0;
@@ -153,7 +166,6 @@
       padding-top: 80px;
     }
     
-    /* Enhanced multi-tone cards with better text contrast */
     .metal-card {
       background: linear-gradient(145deg, #2a2e36, #202228);
       border: 1px solid #424753;
@@ -186,21 +198,18 @@
       background: linear-gradient(90deg, transparent, rgba(210, 215, 225, 0.25), transparent);
     }
     
-    /* Navigation with improved legibility */
     .nav-glass {
       background: rgba(18, 19, 22, 0.92);
       backdrop-filter: blur(18px);
       border-bottom: 1px solid rgba(168, 137, 101, 0.35);
     }
     
-    /* Text colors - higher contrast variants */
     .text-platinum { color: #f0f3fa; }
     .text-chrome { color: #dce1ec; }
     .text-silver { color: #bcc1cc; }
     .text-pewter { color: #9599a5; }
     .text-bronze { color: #c7a16b; }
     
-    /* Button styles - more readable */
     .btn-primary {
       background: linear-gradient(135deg, #9c7e5a, #6b543c);
       color: #ffffff;
@@ -227,14 +236,41 @@
       color: #f0f3fa;
     }
     
-    /* Section backgrounds for visual hierarchy */
+    /* Clean demo link */
+    .demo-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #c7a16b;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 0.6rem 1.4rem;
+      border: 1.5px solid rgba(199, 161, 107, 0.4);
+      border-radius: 50px;
+      transition: all 0.25s ease;
+      background: rgba(199, 161, 107, 0.08);
+    }
+    
+    .demo-link:hover {
+      background: rgba(199, 161, 107, 0.18);
+      border-color: #c7a16b;
+      gap: 0.75rem;
+    }
+    
+    .demo-link i {
+      transition: transform 0.25s ease;
+    }
+    
+    .demo-link:hover i {
+      transform: translateX(3px);
+    }
+    
     .section-dark { background: #181b20; }
     .section-mid { background: #1f2229; }
     .section-warm { 
       background: linear-gradient(180deg, #1f2229 0%, #201e1a 50%, #1f2229 100%); 
     }
     
-    /* Gradient text accent with better readability */
     .gradient-text {
       background: linear-gradient(135deg, #e0e6f5, #c7a16b);
       -webkit-background-clip: text;
@@ -243,19 +279,6 @@
       font-weight: 600;
     }
     
-    /* Certificate empty state - visual but not distracting */
-    .certificate-empty-state {
-      background: linear-gradient(145deg, rgba(42, 46, 54, 0.85), rgba(28, 30, 36, 0.9));
-      backdrop-filter: blur(2px);
-      border: 1px solid #4f4f5a;
-    }
-    
-    .certificate-placeholder-icon {
-      background: linear-gradient(145deg, #2e323c, #1b1d24);
-      box-shadow: 0 8px 18px -6px black;
-    }
-    
-    /* new readability improvements */
     p, li, .description-text {
       line-height: 1.6;
       font-weight: 400;
@@ -269,7 +292,6 @@
       text-shadow: 0 1px 2px rgba(0,0,0,0.4);
     }
     
-    /* Scrollbar refinement */
     ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-track { background: #131518; }
     ::-webkit-scrollbar-thumb { 
@@ -277,15 +299,6 @@
       border-radius: 4px;
     }
     
-    @keyframes subtlePulse {
-      0% { opacity: 0.7; }
-      100% { opacity: 1; }
-    }
-    .shimmer-placeholder {
-      animation: subtlePulse 2.4s infinite alternate;
-    }
-    
-    /* fix badge contrast */
     .badge-tech {
       background: #2c303a;
       color: #e8ecf5;
@@ -300,7 +313,6 @@
 <body class="antialiased">
   <div id="app" class="min-h-screen flex flex-col bg-[#131518]">
     
-    <!-- Navigation -->
     <nav class="absolute top-0 left-0 right-0 z-40 nav-glass">
       <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
@@ -311,7 +323,6 @@
           <div class="hidden md:flex space-x-8 text-sm font-medium">
             <a href="#" @click.prevent="scrollToSection('about')" class="text-[#c5cad8] hover:text-[#c7a16b] transition duration-200 font-medium">About</a>
             <a href="#" @click.prevent="scrollToSection('techstack')" class="text-[#c5cad8] hover:text-[#c7a16b] transition duration-200">Stack</a>
-            <a href="#" @click.prevent="scrollToSection('certifications')" class="text-[#c5cad8] hover:text-[#c7a16b] transition duration-200">Certifications</a>
             <a href="#" @click.prevent="scrollToSection('projects')" class="text-[#c5cad8] hover:text-[#c7a16b] transition duration-200">Projects</a>
             <a href="#" @click.prevent="scrollToSection('contact')" class="text-[#c5cad8] hover:text-[#c7a16b] transition duration-200">Contact</a>
           </div>
@@ -321,35 +332,29 @@
             </button>
           </div>
         </div>
-        <!-- Mobile menu improved readability -->
         <div v-if="mobileMenuOpen" class="md:hidden pb-4 pt-2 space-y-2 bg-[#1c1e24]/95 backdrop-blur-md rounded-2xl mt-2 px-5 shadow-xl border border-[#4a4f5a]">
           <a href="#" @click.prevent="scrollToSection('about'); mobileMenuOpen = false" class="block py-2.5 text-[#e0e4ee] hover:text-[#c7a16b] font-medium">About</a>
           <a href="#" @click.prevent="scrollToSection('techstack'); mobileMenuOpen = false" class="block py-2.5 text-[#e0e4ee] hover:text-[#c7a16b] font-medium">Stack</a>
-          <a href="#" @click.prevent="scrollToSection('certifications'); mobileMenuOpen = false" class="block py-2.5 text-[#e0e4ee] hover:text-[#c7a16b] font-medium">Certifications</a>
           <a href="#" @click.prevent="scrollToSection('projects'); mobileMenuOpen = false" class="block py-2.5 text-[#e0e4ee] hover:text-[#c7a16b] font-medium">Projects</a>
           <a href="#" @click.prevent="scrollToSection('contact'); mobileMenuOpen = false" class="block py-2.5 text-[#e0e4ee] hover:text-[#c7a16b] font-medium">Contact</a>
         </div>
       </div>
     </nav>
 
-    <!-- COVER PHOTO BANNER -->
     <div class="cover-banner"></div>
 
-    <!-- Profile Picture -->
     <div class="profile-container">
       <div class="profile-ring">
         <img src="profile.jpg" alt="John Paul Corre profile picture">
       </div>
     </div>
 
-    <!-- Main Content with enhanced readability -->
     <main class="flex-grow">
-      <!-- About Section - improved text contrast -->
       <section id="about" class="about-section pb-20 px-4 max-w-6xl mx-auto">
         <div class="flex flex-col items-center text-center">
           <div class="flex-1">
             <div class="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-semibold bg-[#2a2e36] text-[#eef2fb] mb-4 border border-[#9a8464] shadow-sm">
-              <span class="w-2 h-2 bg-emerald-400 rounded-full mr-2 animate-pulse"></span> Available for internship
+              <span class="w-2 h-2 bg-emerald-400 rounded-full mr-2 animate-pulse"></span> Available for internship or any positions
             </div>
             <h1 class="text-4xl md:text-6xl font-extrabold text-[#f2f6ff] leading-tight tracking-tight">
               John Paul Corre
@@ -374,7 +379,6 @@
         </div>
       </section>
 
-      <!-- Tech Stack Section - Updated with all 13 technologies -->
       <section id="techstack" class="py-20 section-mid border-y border-[#363c44]">
         <div class="max-w-6xl mx-auto px-4">
           <h2 class="text-3xl md:text-4xl font-bold section-title">
@@ -391,117 +395,39 @@
         </div>
       </section>
 
-      <!-- CERTIFICATION SECTION - Empty but elegantly readable, clearer placeholders -->
-      <section id="certifications" class="py-20 px-4 max-w-6xl mx-auto section-dark">
-        <div class="relative">
-          <h2 class="text-3xl md:text-4xl font-bold section-title">
-            <i class="fas fa-certificate text-[#c7a16b] mr-2"></i> Certifications & Credentials
-          </h2>
-          <p class="text-[#b9bfcd] mt-2 mb-8 max-w-2xl text-base">Earned badges, completed courses, and professional achievements — more coming soon.</p>
-          
-          <!-- Empty state grid with three cards (all empty but future-proof) -->
-          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-7 mt-6">
-            <!-- Card 1 - Accessible and clear placeholder -->
-            <div class="metal-card-light rounded-2xl overflow-hidden certificate-empty-state card-hover flex flex-col transition-all">
-              <div class="relative h-32 bg-gradient-to-br from-[#2e333d] to-[#483e2e] flex items-center justify-center border-b border-[#7a6246]/40">
-                <div class="certificate-placeholder-icon w-16 h-16 rounded-full flex items-center justify-center text-3xl text-[#c7a16b]/80">
-                  <i class="fas fa-clock shimmer-placeholder"></i>
-                </div>
-              </div>
-              <div class="p-6 flex flex-col flex-grow text-center">
-                <div class="inline-flex mx-auto px-3 py-1 rounded-full text-xs font-semibold bg-[#2a2e36] text-[#cdd2e0] mb-3 border border-[#7a6246]/40">
-                  <i class="fas fa-hourglass-half mr-1.5 text-xs"></i> Upcoming
-                </div>
-                <h3 class="font-bold text-xl text-[#eef2fc]">In Progress / Planned</h3>
-                <p class="text-[#b9c0ce] text-sm mt-2 leading-relaxed">
-                  New certifications are on the horizon. I'm actively working toward industry-recognized credentials in modern web tech, cloud fundamentals, and full-stack best practices.
-                </p>
-                <div class="mt-5 pt-3 border-t border-[#3d4350] text-center">
-                  <span class="text-[#989fb0] text-xs flex items-center justify-center gap-1"><i class="far fa-calendar-alt"></i> Expected soon</span>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Card 2 - Clear, readable -->
-            <div class="metal-card-light rounded-2xl overflow-hidden certificate-empty-state card-hover flex flex-col transition-all">
-              <div class="relative h-32 bg-gradient-to-br from-[#232730] to-[#4c3f2f] flex items-center justify-center border-b border-[#7a6246]/40">
-                <div class="certificate-placeholder-icon w-16 h-16 rounded-full flex items-center justify-center text-3xl text-[#c7a16b]/70">
-                  <i class="fas fa-award shimmer-placeholder"></i>
-                </div>
-              </div>
-              <div class="p-6 flex flex-col flex-grow text-center">
-                <div class="inline-flex mx-auto px-3 py-1 rounded-full text-xs font-semibold bg-[#2a2e36] text-[#cdd2e0] mb-3 border border-[#7a6246]/40">
-                  <i class="fas fa-microphone-alt mr-1.5 text-xs"></i> In Review
-                </div>
-                <h3 class="font-bold text-xl text-[#eef2fc]">Portfolio in Development</h3>
-                <p class="text-[#b9c0ce] text-sm mt-2 leading-relaxed">
-                  Certifications from PHP institutes, Vue mastery, and database design will populate this section soon. Stay tuned for updates.
-                </p>
-                <div class="mt-5 pt-3 border-t border-[#3d4350] text-center">
-                  <span class="text-[#c7a16b]/80 text-xs flex items-center justify-center gap-1"><i class="fas fa-spinner fa-pulse"></i> Preparation phase</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Card 3 - Informative empty state -->
-            <div class="metal-card-light rounded-2xl overflow-hidden certificate-empty-state card-hover flex flex-col transition-all">
-              <div class="relative h-32 bg-gradient-to-br from-[#2a2f38] to-[#5c4b35] flex items-center justify-center border-b border-[#7a6246]/40">
-                <div class="certificate-placeholder-icon w-16 h-16 rounded-full flex items-center justify-center text-3xl text-[#c7a16b]/80">
-                  <i class="fas fa-graduation-cap shimmer-placeholder"></i>
-                </div>
-              </div>
-              <div class="p-6 flex flex-col flex-grow text-center">
-                <div class="inline-flex mx-auto px-3 py-1 rounded-full text-xs font-semibold bg-[#2a2e36] text-[#cdd2e0] mb-3 border border-[#7a6246]/40">
-                  <i class="fas fa-seedling mr-1.5 text-xs"></i> Future Ready
-                </div>
-                <h3 class="font-bold text-xl text-[#eef2fc]">Expanding Skillset</h3>
-                <p class="text-[#b9c0ce] text-sm mt-2 leading-relaxed">
-                  Dedicated to earning official recognitions in cloud computing, advanced JavaScript, Laravel, and modern dev workflows. This space will be filled with actual credentials shortly.
-                </p>
-                <div class="mt-5 pt-3 border-t border-[#3d4350] text-center">
-                  <span class="text-[#989fb0] text-xs flex items-center justify-center gap-1"><i class="fas fa-chart-line"></i> Continuous learning</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Additional note with extra readability -->
-          <div class="text-center mt-12 bg-[#20232b]/70 rounded-2xl p-5 max-w-2xl mx-auto border border-[#7a6246]/40 backdrop-blur-sm">
-            <div class="flex flex-wrap items-center justify-center gap-3 text-[#cbcfdb] text-sm font-medium">
-              <i class="fas fa-arrow-right text-[#c7a16b] text-base"></i>
-              <span>Currently building a learning roadmap — certifications from freeCodeCamp, Laracasts, and cloud platforms will be showcased right here.</span>
-              <i class="fas fa-arrow-left text-[#c7a16b] text-base"></i>
-            </div>
-            <div class="mt-2 text-xs text-[#989fb0]">
-              <i class="fas fa-circle-info mr-1"></i> Section placeholder: Earned credentials will be displayed dynamically with issue dates & badges.
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Projects Section - better contrast for project cards -->
+      <!-- Projects Section - Clean, minimal, demo link stands out naturally -->
       <section id="projects" class="py-20 px-4 max-w-6xl mx-auto bg-[#181b20] border-t border-[#323841]">
         <h2 class="text-3xl md:text-4xl font-bold section-title">
           <i class="fas fa-laptop-code text-[#c7a16b] mr-2"></i> Featured Projects
         </h2>
+        
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
           <div v-for="project in projects" :key="project.id" 
                class="metal-card rounded-2xl overflow-hidden card-hover flex flex-col">
+            
+            <!-- Project image with subtle hover -->
             <div class="project-image-placeholder">
               <i :class="project.icon" class="text-5xl drop-shadow-md"></i>
+              <div class="project-image-overlay">
+                <span class="text-white font-medium text-sm">View project →</span>
+              </div>
             </div>
+            
             <div class="p-6 flex flex-col flex-grow">
               <h3 class="font-bold text-2xl text-[#f0f3fc]">{{ project.title }}</h3>
               <p class="text-[#c9cfdd] text-base mt-2 flex-grow leading-relaxed">{{ project.description }}</p>
+              
               <div class="flex flex-wrap gap-2 mt-5">
                 <span v-for="tag in project.tags" :key="tag" class="badge-tech text-xs font-semibold tracking-wide">{{ tag }}</span>
               </div>
+              
+              <!-- Clean action row -->
               <div class="mt-5 pt-4 border-t border-[#424752] flex justify-between items-center">
-                <a :href="project.link" target="_blank" class="text-[#c7a16b] hover:text-[#dabe97] text-sm font-semibold flex items-center gap-1.5 transition">
-                  <i class="fas fa-external-link-alt text-xs"></i> Live demo
+                <a :href="project.link" target="_blank" class="demo-link">
+                  Live demo <i class="fas fa-arrow-right text-xs"></i>
                 </a>
                 <a :href="project.github" target="_blank" class="text-[#969dad] hover:text-[#cbd0dd] text-sm flex items-center gap-1.5 transition font-medium">
-                  <i class="fab fa-github"></i> Code
+                  <i class="fab fa-github"></i> Source
                 </a>
               </div>
             </div>
@@ -509,7 +435,6 @@
         </div>
       </section>
 
-      <!-- Contact Section - refined text clarity -->
       <section id="contact" class="py-20 section-warm">
         <div class="max-w-4xl mx-auto px-4 text-center">
           <h2 class="text-3xl md:text-4xl font-bold section-title inline-block mx-auto">
@@ -544,7 +469,6 @@
       </section>
     </main>
 
-    <!-- Footer with subtle contrast -->
     <footer class="bg-[#12151a] border-t border-[#2c2f38] py-6 text-center text-[#8a919f] text-sm">
       <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center">
         <p>&copy; 2025 John Paul Corre – built with Vue & Tailwind</p>
@@ -583,7 +507,7 @@
               description: 'JavaScript app fetching weather API, with PHP proxy to secure keys. Clean UI with CSS animations.',
               tags: ['JavaScript', 'PHP', 'CSS', 'API'],
               link: 'https://p4blo0o0.github.io/Weather-WebApp/',
-              github: '#'
+              github: 'https://github.com/P4blo0o0/Weather-WebApp'
             },
             {
               id: 2,
@@ -592,7 +516,7 @@
               description: 'Interactive music player with playlist support, audio controls, dynamic track loading, and responsive UI design.',
               tags: ['JavaScript', 'HTML', 'CSS', 'Audio API'],
               link: 'https://p4blo0o0.github.io/Music-Player/',
-              github: '#'
+              github: 'https://github.com/P4blo0o0/Music-Player'
             }
           ]
         }
