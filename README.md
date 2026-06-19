@@ -4,7 +4,7 @@ A modern portfolio website built with **Vue 3** and **Tailwind CSS** to showcase
 
 ## 🚀 Live Demo
 
-[View Portfolio](https://p4blo0o0.github.io/Portfolio/)
+[View Portfolio](https://polszstack.github.io/Portfolio/)
 
 ## 🛠️ Tech Stack
 
