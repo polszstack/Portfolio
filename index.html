@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>John Paul Corre · Tech Intern Portfolio</title>
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Vue 3 CDN -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap');
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: #131518;
+      margin: 0;
+      scroll-behavior: smooth;
+    }
+    
+    :root {
+      --deep-charcoal: #121316;
+      --gunmetal: #1c1e22;
+      --dark-slate: #24272c;
+      --cool-steel: #363a42;
+      --warm-bronze: #7a6246;
+      --antique-gold: #a88965;
+      --pewter: #8e929b;
+      --silver: #b9bdc6;
+      --chrome: #d4d7df;
+      --platinum: #eceff5;
+    }
+    
+    body {
+      background: #121316;
+      color: #eef2f8;
+    }
+    
+    .card-hover {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card-hover:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.6), 0 0 28px rgba(168, 137, 101, 0.12);
+    }
+    
+    .cover-banner {
+      background: linear-gradient(160deg, #121316 0%, #1c1e22 20%, #24272c 40%, #5c4b35 70%, #363a42 100%);
+      background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&q=80');
+      background-size: cover;
+      background-position: center;
+      background-blend-mode: overlay;
+      position: relative;
+      width: 100%;
+      height: 280px;
+      border-radius: 0 0 36px 36px;
+      margin-bottom: -80px;
+    }
+    
+    .cover-banner::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(180deg, 
+        rgba(18, 19, 22, 0.9) 0%, 
+        rgba(28, 30, 34, 0.82) 45%,
+        rgba(90, 70, 50, 0.45) 80%,
+        rgba(45, 48, 55, 0.7) 100%);
+      border-radius: 0 0 36px 36px;
+    }
+    
+    .profile-container {
+      position: relative;
+      z-index: 10;
+      margin-top: -140px;
+      display: flex;
+      justify-content: center;
+    }
+    
+    .profile-ring {
+      background: linear-gradient(135deg, #a88965, #8e929b, #7a6246, #5a6b7c);
+      padding: 5px;
+      border-radius: 50%;
+      display: inline-block;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+    }
+    .profile-ring img {
+      border-radius: 50%;
+      object-fit: cover;
+      width: 150px;
+      height: 150px;
+      border: 5px solid #24272c;
+      display: block;
+    }
+    
+    .badge-tech {
+      background: linear-gradient(135deg, #363a42, #24272c);
+      color: #e2e6ed;
+      font-weight: 500;
+      padding: 0.35rem 1.1rem;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      letter-spacing: 0.2px;
+      border: 1px solid #7a6246;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
+    
+    .section-title {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 2rem;
+      color: #f0f3fa;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    .section-title:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -10px;
+      width: 70px;
+      height: 4px;
+      background: linear-gradient(to right, #a88965, #c0c4cf, #9aa2b5);
+      border-radius: 4px;
+    }
+    
+    .project-image-placeholder {
+      background: linear-gradient(135deg, #363a42, #7a6246);
+      height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 20px 20px 0 0;
+      font-size: 2.5rem;
+      color: #e0e4ed;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    /* Subtle overlay on hover */
+    .project-image-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .card-hover:hover .project-image-overlay {
+      opacity: 1;
+    }
+    
+    .about-section {
+      background: linear-gradient(180deg, #24272c 0%, #181a1f 100%);
+      border-radius: 30px 30px 0 0;
+      margin-top: -30px;
+      position: relative;
+      z-index: 5;
+      padding-top: 80px;
+    }
+    
+    .metal-card {
+      background: linear-gradient(145deg, #2a2e36, #202228);
+      border: 1px solid #424753;
+      position: relative;
+      border-radius: 1.5rem;
+    }
+    .metal-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(168, 137, 101, 0.5), transparent);
+      border-radius: 20px 20px 0 0;
+    }
+    
+    .metal-card-light {
+      background: linear-gradient(145deg, #3a3e48, #25282f);
+      border: 1px solid #7a6246;
+      position: relative;
+    }
+    .metal-card-light::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(210, 215, 225, 0.25), transparent);
+    }
+    
+    .nav-glass {
+      background: rgba(18, 19, 22, 0.92);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(168, 137, 101, 0.35);
+    }
+    
+    .text-platinum { color: #f0f3fa; }
+    .text-chrome { color: #dce1ec; }
+    .text-silver { color: #bcc1cc; }
+    .text-pewter { color: #9599a5; }
+    .text-bronze { color: #c7a16b; }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, #9c7e5a, #6b543c);
+      color: #ffffff;
+      border: 1px solid #bcb7ae;
+      font-weight: 600;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #b28f66, #7f6246);
+      box-shadow: 0 8px 22px rgba(156, 126, 90, 0.4);
+      transform: translateY(-2px);
+      color: white;
+    }
+    
+    .btn-outline {
+      background: rgba(54, 58, 66, 0.5);
+      color: #e1e5ef;
+      border: 1px solid #888c98;
+      font-weight: 500;
+    }
+    .btn-outline:hover {
+      background: rgba(124, 98, 70, 0.2);
+      border-color: #c7a16b;
+      color: #f0f3fa;
+    }
+    
+    /* Clean demo link */
+    .demo-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #c7a16b;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 0.6rem 1.4rem;
+      border: 1.5px solid rgba(199, 161, 107, 0.4);
+      border-radius: 50px;
+      transition: all 0.25s ease;
+      background: rgba(199, 161, 107, 0.08);
+    }
+    
+    .demo-link:hover {
+      background: rgba(199, 161, 107, 0.18);
+      border-color: #c7a16b;
+      gap: 0.75rem;
+    }
+    
+    .demo-link i {
+      transition: transform 0.25s ease;
+    }
+    
+    .demo-link:hover i {
+      transform: translateX(3px);
+    }
+    
+    .section-dark { background: #181b20; }
+    .section-mid { background: #1f2229; }
+    .section-warm { 
+      background: linear-gradient(180deg, #1f2229 0%, #201e1a 50%, #1f2229 100%); 
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #e0e6f5, #c7a16b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 600;
+    }
+    
+    p, li, .description-text {
+      line-height: 1.6;
+      font-weight: 400;
+    }
+    
+    h1, h2, h3, .font-bold {
+      letter-spacing: -0.01em;
+    }
+    
+    .text-shadow-sm {
+      text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+    }
+    
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #131518; }
+    ::-webkit-scrollbar-thumb { 
+      background: linear-gradient(180deg, #7a6246, #4f5a6b);
+      border-radius: 4px;
+    }
+    
+    .badge-tech {
+      background: #2c303a;
+      color: #e8ecf5;
+      border-color: #7c684e;
+    }
+    
+    .metal-card .text-chrome, .metal-card-light .text-chrome {
+      color: #e4e8f2;
+    }
+  </style>
+</head>
+<body class="antialiased">
+  <div id="app" class="min-h-screen flex flex-col bg-[#131518]">
+    
+    <nav class="absolute top-0 left-0 right-0 z-40 nav-glass">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          <div class="flex items-center space-x-3">
+            <span class="text-2xl font-bold gradient-text drop-shadow-lg tracking-tight">JC</span>
+            <span class="hidden sm:inline text-[#d4d9e6] font-semibold tracking-tight">John Paul Corre</span>
+          </div>
+          <div class="hidden md:flex space-x-8 text-sm font-medium">
+            <a href="#" @click.prevent="scrollToSection('about')" class="text-[#c5cad8] hover:text-[#c7a16b] transition duration-200 font-medium">About</a>
+            <a href="#" @click.prevent="scrollToSection('techstack')" class="text-[#c5cad8] hover:text-[#c7a16b] transition duration-200">Stack</a>
+            <a href="#" @click.prevent="scrollToSection('projects')" class="text-[#c5cad8] hover:text-[#c7a16b] transition duration-200">Projects</a>
+            <a href="#" @click.prevent="scrollToSection('contact')" class="text-[#c5cad8] hover:text-[#c7a16b] transition duration-200">Contact</a>
+          </div>
+          <div class="md:hidden">
+            <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-[#c5cad8] focus:outline-none text-xl">
+              <i class="fas fa-bars"></i>
+            </button>
+          </div>
+        </div>
+        <div v-if="mobileMenuOpen" class="md:hidden pb-4 pt-2 space-y-2 bg-[#1c1e24]/95 backdrop-blur-md rounded-2xl mt-2 px-5 shadow-xl border border-[#4a4f5a]">
+          <a href="#" @click.prevent="scrollToSection('about'); mobileMenuOpen = false" class="block py-2.5 text-[#e0e4ee] hover:text-[#c7a16b] font-medium">About</a>
+          <a href="#" @click.prevent="scrollToSection('techstack'); mobileMenuOpen = false" class="block py-2.5 text-[#e0e4ee] hover:text-[#c7a16b] font-medium">Stack</a>
+          <a href="#" @click.prevent="scrollToSection('projects'); mobileMenuOpen = false" class="block py-2.5 text-[#e0e4ee] hover:text-[#c7a16b] font-medium">Projects</a>
+          <a href="#" @click.prevent="scrollToSection('contact'); mobileMenuOpen = false" class="block py-2.5 text-[#e0e4ee] hover:text-[#c7a16b] font-medium">Contact</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="cover-banner"></div>
+
+    <div class="profile-container">
+      <div class="profile-ring">
+        <img src="profile.jpg" alt="John Paul Corre profile picture">
+      </div>
+    </div>
+
+    <main class="flex-grow">
+      <section id="about" class="about-section pb-20 px-4 max-w-6xl mx-auto">
+        <div class="flex flex-col items-center text-center">
+          <div class="flex-1">
+            <div class="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-semibold bg-[#2a2e36] text-[#eef2fb] mb-4 border border-[#9a8464] shadow-sm">
+              <span class="w-2 h-2 bg-emerald-400 rounded-full mr-2 animate-pulse"></span> Available for internship or any positions
+            </div>
+            <h1 class="text-4xl md:text-6xl font-extrabold text-[#f2f6ff] leading-tight tracking-tight">
+              John Paul Corre
+            </h1>
+            <p class="text-xl md:text-2xl gradient-text mt-2 font-semibold">
+              Full-Stack Developer · PHP · Vue · Python
+            </p>
+            <p class="mt-5 text-[#cdd2df] max-w-xl mx-auto leading-relaxed text-base">
+              Passionate about building dynamic web applications with clean code. 
+              I blend modern JavaScript frameworks with robust PHP & Python backends. 
+              Currently seeking an internship to contribute to real-world products.
+            </p>
+            <div class="flex flex-wrap gap-4 mt-8 justify-center">
+              <a href="#" @click.prevent="scrollToSection('contact')" class="btn-primary px-7 py-3 rounded-full font-semibold shadow-xl transition flex items-center gap-2 text-base">
+                <i class="fas fa-paper-plane"></i> Let's talk
+              </a>
+              <a href="#" @click.prevent="scrollToSection('projects')" class="btn-outline px-7 py-3 rounded-full font-semibold transition flex items-center gap-2 text-base">
+                <i class="fas fa-code"></i> View work
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="techstack" class="py-20 section-mid border-y border-[#363c44]">
+        <div class="max-w-6xl mx-auto px-4">
+          <h2 class="text-3xl md:text-4xl font-bold section-title">
+            <i class="fas fa-microchip text-[#c7a16b] mr-2"></i> Tech Stack
+          </h2>
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 mt-10">
+            <div v-for="tech in technologies" :key="tech.name" 
+                 class="metal-card rounded-2xl p-5 text-center card-hover flex flex-col items-center justify-center gap-3 transition-all">
+              <i :class="tech.icon" class="text-4xl" :style="{ color: tech.color, filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))' }"></i>
+              <span class="font-bold text-lg text-[#eef2fc]">{{ tech.name }}</span>
+              <span class="text-xs font-medium text-[#a9aebd] bg-[#1e2128] px-3 py-1 rounded-full">{{ tech.level }}</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Projects Section - Clean, minimal, demo link stands out naturally -->
+      <section id="projects" class="py-20 px-4 max-w-6xl mx-auto bg-[#181b20] border-t border-[#323841]">
+        <h2 class="text-3xl md:text-4xl font-bold section-title">
+          <i class="fas fa-laptop-code text-[#c7a16b] mr-2"></i> Featured Projects
+        </h2>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
+          <div v-for="project in projects" :key="project.id" 
+               class="metal-card rounded-2xl overflow-hidden card-hover flex flex-col">
+            
+            <!-- Project image with subtle hover -->
+            <div class="project-image-placeholder">
+              <i :class="project.icon" class="text-5xl drop-shadow-md"></i>
+              <div class="project-image-overlay">
+                <span class="text-white font-medium text-sm">View project →</span>
+              </div>
+            </div>
+            
+            <div class="p-6 flex flex-col flex-grow">
+              <h3 class="font-bold text-2xl text-[#f0f3fc]">{{ project.title }}</h3>
+              <p class="text-[#c9cfdd] text-base mt-2 flex-grow leading-relaxed">{{ project.description }}</p>
+              
+              <div class="flex flex-wrap gap-2 mt-5">
+                <span v-for="tag in project.tags" :key="tag" class="badge-tech text-xs font-semibold tracking-wide">{{ tag }}</span>
+              </div>
+              
+              <!-- Clean action row -->
+              <div class="mt-5 pt-4 border-t border-[#424752] flex justify-between items-center">
+                <a :href="project.link" target="_blank" class="demo-link">
+                  Live demo <i class="fas fa-arrow-right text-xs"></i>
+                </a>
+                <a :href="project.github" target="_blank" class="text-[#969dad] hover:text-[#cbd0dd] text-sm flex items-center gap-1.5 transition font-medium">
+                  <i class="fab fa-github"></i> Source
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="py-20 section-warm">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+          <h2 class="text-3xl md:text-4xl font-bold section-title inline-block mx-auto">
+            <i class="fas fa-envelope-open-text text-[#c7a16b] mr-2"></i> Get in touch
+          </h2>
+          <p class="text-[#cdd2df] mt-5 max-w-xl mx-auto text-base leading-relaxed">
+            I'm excited about internship opportunities where I can leverage PHP, JavaScript, Python, and modern frameworks.
+            Drop me a message!
+          </p>
+          <div class="mt-10 metal-card-light rounded-2xl shadow-2xl p-7 md:p-8 max-w-lg mx-auto">
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 text-[#e0e5f2] mb-6 text-base">
+              <div class="flex items-center gap-2.5">
+                <i class="fas fa-map-marker-alt text-[#c7a16b] text-lg"></i> <span>Manila, PH (Remote friendly)</span>
+              </div>
+              <div class="hidden sm:block text-[#7c838f]">|</div>
+              <div class="flex items-center gap-2.5">
+                <i class="fas fa-envelope text-[#c7a16b] text-lg"></i> <span class="font-mono text-sm">jvanpablo455@gmail.com</span>
+              </div>
+            </div>
+            <a href="mailto:jvanpablo455@gmail.com" class="inline-block w-full sm:w-auto btn-primary px-8 py-3.5 rounded-full shadow-lg transition transform hover:scale-[1.02] font-bold text-base">
+              <i class="fas fa-paper-plane mr-2"></i> Send Email
+            </a>
+            <div class="flex justify-center space-x-6 mt-7 text-3xl text-[#9fa6b7]">
+              <a href="https://github.com/P4blo0o0" target="_blank" class="hover:text-[#c7a16b] transition-all duration-200"><i class="fab fa-github"></i></a>
+              <a href="https://www.linkedin.com/in/john-paul-daiz-corre-504006398/" target="_blank" class="hover:text-[#c7a16b] transition-all duration-200"><i class="fab fa-linkedin"></i></a> 
+              <a href="https://www.freecodecamp.org/polsz" target="_blank" class="hover:text-[#c7a16b] transition-all duration-200">
+  <i class="fab fa-free-code-camp"></i>
+</a>           
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-[#12151a] border-t border-[#2c2f38] py-6 text-center text-[#8a919f] text-sm">
+      <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center">
+        <p>&copy; 2025 John Paul Corre – built with Vue & Tailwind</p>
+        <p class="mt-2 sm:mt-0 font-medium">PHP · Python · JavaScript · MySQL</p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+          mobileMenuOpen: false,
+          technologies: [
+            { name: 'PHP', icon: 'fab fa-php', color: '#99a9d4', level: 'Backend' },
+            { name: 'JavaScript', icon: 'fab fa-js-square', color: '#f7df1e', level: 'Language' },
+            { name: 'CSS', icon: 'fab fa-css3-alt', color: '#2c6fbb', level: 'Styling' },
+            { name: 'HTML', icon: 'fab fa-html5', color: '#f0652e', level: 'Markup' },
+            { name: 'Express.js', icon: 'fab fa-node-js', color: '#68a063', level: 'Framework' },
+            { name: 'Python', icon: 'fab fa-python', color: '#3776ab', level: 'Language' },
+            { name: 'FastAPI', icon: 'fas fa-bolt', color: '#009688', level: 'Framework' },
+            { name: 'Vue.js', icon: 'fab fa-vuejs', color: '#6fbf73', level: 'Framework' },
+            { name: 'MySQL', icon: 'fas fa-database', color: '#e09d5e', level: 'Database' },
+            { name: 'Git', icon: 'fab fa-git-alt', color: '#f26522', level: 'Version' },
+            { name: 'Node.js', icon: 'fab fa-node-js', color: '#68a063', level: 'Runtime' },
+            { name: 'Tailwind', icon: 'fas fa-wind', color: '#6bc2f0', level: 'CSS Framework' },
+            { name: 'Bootstrap', icon: 'fab fa-bootstrap', color: '#7952b3', level: 'CSS Framework' },
+          ],
+          projects: [
+            {
+              id: 1,
+              title: 'Weather Dashboard',
+              icon: 'fas fa-cloud-sun',
+              description: 'JavaScript app fetching weather API, with PHP proxy to secure keys. Clean UI with CSS animations.',
+              tags: ['JavaScript', 'PHP', 'CSS', 'API'],
+              link: 'https://p4blo0o0.github.io/Weather-WebApp/',
+              github: 'https://github.com/P4blo0o0/Weather-WebApp'
+            },
+            {
+              id: 2,
+              title: 'Music Player',
+              icon: 'fas fa-music',
+              description: 'Interactive music player with playlist support, audio controls, dynamic track loading, and responsive UI design.',
+              tags: ['JavaScript', 'HTML', 'CSS', 'Audio API'],
+              link: 'https://p4blo0o0.github.io/Music-Player/',
+              github: 'https://github.com/P4blo0o0/Music-Player'
+            }
+          ]
+        }
+      },
+      methods: {
+        scrollToSection(sectionId) {
+          const element = document.getElementById(sectionId);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
