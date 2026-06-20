@@ -18,7 +18,7 @@ PHP · Python · JavaScript · Vue.js · MySQL · Git · Tailwind CSS · Bootstr
 ## 📞 Contact
 
 - Email: jvanpablo455@gmail.com
-- GitHub: [@polszstack](https://github.com/P4blo0o0)
+- GitHub: [@polszstack](https://github.com/polszstack)
 - LinkedIn: [John Paul Corre](https://www.linkedin.com/in/john-paul-daiz-corre-504006398/)
 
 ## 📄 License
