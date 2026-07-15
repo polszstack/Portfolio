@@ -5,58 +5,74 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>John Paul Corre · Tech Intern Portfolio</title>
   <!-- Tailwind CSS via CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
   <!-- Vue 3 CDN -->
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js">
+  </script>
   <!-- Font Awesome 6 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    /* ... existing styles (keeping exactly as provided) ... */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap');
+    /* Modern, clean design with subtle gradients and smooth interactions */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+    
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      background: #131518;
+      background: #faf9f6;
       margin: 0;
       scroll-behavior: smooth;
+      color: #1e1e1e;
     }
     
     :root {
-      --deep-charcoal: #121316;
-      --gunmetal: #1c1e22;
-      --dark-slate: #24272c;
-      --cool-steel: #363a42;
-      --warm-bronze: #7a6246;
-      --antique-gold: #a88965;
-      --pewter: #8e929b;
-      --silver: #b9bdc6;
-      --chrome: #d4d7df;
-      --platinum: #eceff5;
+      --bg-primary: #faf9f6;
+      --bg-secondary: #ffffff;
+      --bg-accent: #f3f0eb;
+      --text-primary: #1a1a1a;
+      --text-secondary: #555555;
+      --text-muted: #777777;
+      --border-light: #e8e5e0;
+      --border-medium: #d4cfc7;
+      --accent-soft: #e6d7c0;
+      --accent-warm: #b8956a;
+      --accent-cool: #5f6b7a;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 8px 24px rgba(0,0,0,0.06);
+      --shadow-lg: 0 16px 40px rgba(0,0,0,0.07);
+      --radius-sm: 12px;
+      --radius-md: 20px;
+      --radius-lg: 28px;
     }
     
     body {
-      background: #121316;
-      color: #eef2f8;
+      background: var(--bg-primary);
+      color: var(--text-primary);
     }
     
     .card-hover {
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-sm);
     }
     .card-hover:hover {
       transform: translateY(-6px);
-      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.6), 0 0 28px rgba(168, 137, 101, 0.12);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--border-medium);
     }
     
     .cover-banner {
-      background: linear-gradient(160deg, #121316 0%, #1c1e22 20%, #24272c 40%, #5c4b35 70%, #363a42 100%);
+      background: linear-gradient(135deg, #d9cebf 0%, #c8b79b 25%, #b8a88a 50%, #a3937a 75%, #8c7b65 100%);
       background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&q=80');
       background-size: cover;
       background-position: center;
-      background-blend-mode: overlay;
+      background-blend-mode: soft-light;
       position: relative;
       width: 100%;
-      height: 280px;
-      border-radius: 0 0 36px 36px;
-      margin-bottom: -80px;
+      height: 240px;
+      border-radius: 0 0 40px 40px;
+      margin-bottom: -60px;
+      overflow: hidden;
     }
     
     .cover-banner::before {
@@ -67,86 +83,102 @@
       right: 0;
       bottom: 0;
       background: linear-gradient(180deg, 
-        rgba(18, 19, 22, 0.9) 0%, 
-        rgba(28, 30, 34, 0.82) 45%,
-        rgba(90, 70, 50, 0.45) 80%,
-        rgba(45, 48, 55, 0.7) 100%);
-      border-radius: 0 0 36px 36px;
+        rgba(250, 249, 246, 0.75) 0%, 
+        rgba(255, 255, 255, 0.6) 40%,
+        rgba(230, 215, 192, 0.3) 80%,
+        rgba(250, 249, 246, 0.85) 100%);
+      border-radius: 0 0 40px 40px;
+    }
+    
+    /* Decorative floating elements */
+    .decorative-circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(184, 149, 106, 0.08);
+      z-index: 0;
+      pointer-events: none;
+    }
+    
+    .decorative-dots {
+      position: absolute;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.15;
     }
     
     .profile-container {
       position: relative;
       z-index: 10;
-      margin-top: -140px;
+      margin-top: -120px;
       display: flex;
       justify-content: center;
     }
     
     .profile-ring {
-      background: linear-gradient(135deg, #a88965, #8e929b, #7a6246, #5a6b7c);
+      background: linear-gradient(135deg, #e0d3c0, #b8956a, #8c7b65);
       padding: 5px;
       border-radius: 50%;
       display: inline-block;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1), 0 0 0 8px rgba(255,255,255,0.8);
     }
     .profile-ring img {
       border-radius: 50%;
       object-fit: cover;
-      width: 150px;
-      height: 150px;
-      border: 5px solid #24272c;
+      width: 140px;
+      height: 140px;
+      border: 4px solid white;
       display: block;
     }
     
     .badge-tech {
-      background: linear-gradient(135deg, #363a42, #24272c);
-      color: #e2e6ed;
+      background: #f3f0eb;
+      color: #3a3a3a;
       font-weight: 500;
-      padding: 0.35rem 1.1rem;
-      border-radius: 40px;
-      font-size: 0.85rem;
+      padding: 0.35rem 1rem;
+      border-radius: 30px;
+      font-size: 0.8rem;
       letter-spacing: 0.2px;
-      border: 1px solid #7a6246;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+      border: 1px solid #e2dbd0;
     }
     
     .section-title {
       position: relative;
       display: inline-block;
-      margin-bottom: 2rem;
-      color: #f0f3fa;
+      margin-bottom: 2.5rem;
+      color: #1a1a1a;
       font-weight: 700;
-      letter-spacing: -0.01em;
+      letter-spacing: -0.02em;
+      font-family: 'Space Grotesk', sans-serif;
     }
     .section-title:after {
       content: '';
       position: absolute;
       left: 0;
-      bottom: -10px;
-      width: 70px;
-      height: 4px;
-      background: linear-gradient(to right, #a88965, #c0c4cf, #9aa2b5);
+      bottom: -12px;
+      width: 50px;
+      height: 3px;
+      background: #b8956a;
       border-radius: 4px;
     }
     
     .project-image-placeholder {
-      background: linear-gradient(135deg, #363a42, #7a6246);
-      height: 150px;
+      background: linear-gradient(135deg, #f3f0eb, #e8e2d5);
+      height: 160px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 20px 20px 0 0;
-      font-size: 2.5rem;
-      color: #e0e4ed;
+      border-radius: 16px 16px 0 0;
+      font-size: 2.8rem;
+      color: #8c7b65;
       position: relative;
       overflow: hidden;
     }
     
-    /* Subtle overlay on hover */
     .project-image-overlay {
       position: absolute;
       inset: 0;
-      background: rgba(0,0,0,0.5);
+      background: rgba(30, 30, 30, 0.4);
+      backdrop-filter: blur(2px);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -159,121 +191,100 @@
     }
     
     .about-section {
-      background: linear-gradient(180deg, #24272c 0%, #181a1f 100%);
-      border-radius: 30px 30px 0 0;
-      margin-top: -30px;
+      background: var(--bg-secondary);
+      border-radius: 36px 36px 0 0;
+      margin-top: -20px;
       position: relative;
       z-index: 5;
-      padding-top: 80px;
+      padding-top: 70px;
+      box-shadow: 0 -10px 25px rgba(0,0,0,0.02);
+      overflow: hidden;
     }
     
     .metal-card {
-      background: linear-gradient(145deg, #2a2e36, #202228);
-      border: 1px solid #424753;
+      background: #ffffff;
+      border: 1px solid #efebe5;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
       position: relative;
-      border-radius: 1.5rem;
-    }
-    .metal-card::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(168, 137, 101, 0.5), transparent);
-      border-radius: 20px 20px 0 0;
     }
     
     .metal-card-light {
-      background: linear-gradient(145deg, #3a3e48, #25282f);
-      border: 1px solid #7a6246;
-      position: relative;
-    }
-    .metal-card-light::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(210, 215, 225, 0.25), transparent);
+      background: #ffffff;
+      border: 1px solid #e8e3da;
+      border-radius: 24px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.04);
     }
     
     .nav-glass {
-      background: rgba(18, 19, 22, 0.92);
+      background: rgba(255, 255, 255, 0.8);
       backdrop-filter: blur(18px);
-      border-bottom: 1px solid rgba(168, 137, 101, 0.35);
+      border-bottom: 1px solid rgba(180, 160, 130, 0.25);
     }
     
-    .text-platinum { color: #f0f3fa; }
-    .text-chrome { color: #dce1ec; }
-    .text-silver { color: #bcc1cc; }
-    .text-pewter { color: #9599a5; }
-    .text-bronze { color: #c7a16b; }
+    .text-platinum { color: #2d2d2d; }
+    .text-chrome { color: #3a3a3a; }
+    .text-silver { color: #5a5a5a; }
+    .text-pewter { color: #6b6b6b; }
+    .text-bronze { color: #b8956a; }
     
     .btn-primary {
-      background: linear-gradient(135deg, #9c7e5a, #6b543c);
+      background: #1e1e1e;
       color: #ffffff;
-      border: 1px solid #bcb7ae;
+      border: 1px solid #1e1e1e;
       font-weight: 600;
-      box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+      border-radius: 40px;
+      transition: all 0.3s ease;
     }
     .btn-primary:hover {
-      background: linear-gradient(135deg, #b28f66, #7f6246);
-      box-shadow: 0 8px 22px rgba(156, 126, 90, 0.4);
+      background: #2d2d2d;
+      box-shadow: 0 12px 22px rgba(0,0,0,0.15);
       transform: translateY(-2px);
-      color: white;
     }
     
     .btn-outline {
-      background: rgba(54, 58, 66, 0.5);
-      color: #e1e5ef;
-      border: 1px solid #888c98;
-      font-weight: 500;
+      background: transparent;
+      color: #1e1e1e;
+      border: 1.5px solid #d4cfc7;
+      font-weight: 600;
+      border-radius: 40px;
+      transition: all 0.3s ease;
     }
     .btn-outline:hover {
-      background: rgba(124, 98, 70, 0.2);
-      border-color: #c7a16b;
-      color: #f0f3fa;
+      background: rgba(184, 149, 106, 0.05);
+      border-color: #b8956a;
+      color: #1e1e1e;
     }
     
-    /* Clean demo link */
     .demo-link {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      color: #c7a16b;
+      gap: 0.4rem;
+      color: #b8956a;
       font-weight: 600;
-      font-size: 0.95rem;
-      padding: 0.6rem 1.4rem;
-      border: 1.5px solid rgba(199, 161, 107, 0.4);
-      border-radius: 50px;
+      font-size: 0.9rem;
+      padding: 0.5rem 1.2rem;
+      border: 1.5px solid #e0d3c0;
+      border-radius: 30px;
       transition: all 0.25s ease;
-      background: rgba(199, 161, 107, 0.08);
+      background: #fefcf9;
     }
     
     .demo-link:hover {
-      background: rgba(199, 161, 107, 0.18);
-      border-color: #c7a16b;
-      gap: 0.75rem;
+      background: #f9f5ef;
+      border-color: #b8956a;
+      gap: 0.65rem;
     }
     
-    .demo-link i {
-      transition: transform 0.25s ease;
-    }
-    
-    .demo-link:hover i {
-      transform: translateX(3px);
-    }
-    
-    .section-dark { background: #181b20; }
-    .section-mid { background: #1f2229; }
+    .section-dark { background: #faf9f6; }
+    .section-mid { background: #ffffff; }
     .section-warm { 
-      background: linear-gradient(180deg, #1f2229 0%, #201e1a 50%, #1f2229 100%); 
+      background: linear-gradient(180deg, #ffffff 0%, #f8f5f0 50%, #ffffff 100%); 
     }
     
     .gradient-text {
-      background: linear-gradient(135deg, #e0e6f5, #c7a16b);
+      background: linear-gradient(135deg, #3a3a3a, #b8956a);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -281,153 +292,263 @@
     }
     
     p, li, .description-text {
-      line-height: 1.6;
+      line-height: 1.7;
       font-weight: 400;
+      color: #4a4a4a;
     }
     
     h1, h2, h3, .font-bold {
-      letter-spacing: -0.01em;
+      letter-spacing: -0.02em;
+      font-family: 'Space Grotesk', sans-serif;
     }
     
-    .text-shadow-sm {
-      text-shadow: 0 1px 2px rgba(0,0,0,0.4);
-    }
-    
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: #131518; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f5f2ed; }
     ::-webkit-scrollbar-thumb { 
-      background: linear-gradient(180deg, #7a6246, #4f5a6b);
-      border-radius: 4px;
+      background: #c8b79b;
+      border-radius: 3px;
+    }
+
+    /* Scroll animation classes */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s cubic-bezier(0.23, 1, 0.32, 1), transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
     }
     
-    .badge-tech {
-      background: #2c303a;
-      color: #e8ecf5;
-      border-color: #7c684e;
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
     
-    .metal-card .text-chrome, .metal-card-light .text-chrome {
-      color: #e4e8f2;
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity 0.7s cubic-bezier(0.23, 1, 0.32, 1), transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    .reveal-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity 0.7s cubic-bezier(0.23, 1, 0.32, 1), transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    .reveal-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    
+    .reveal-scale {
+      opacity: 0;
+      transform: scale(0.9);
+      transition: opacity 0.7s cubic-bezier(0.23, 1, 0.32, 1), transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    .reveal-scale.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+    
+    /* Staggered delays for tech cards */
+    .tech-card:nth-child(1) { transition-delay: 0.05s; }
+    .tech-card:nth-child(2) { transition-delay: 0.1s; }
+    .tech-card:nth-child(3) { transition-delay: 0.15s; }
+    .tech-card:nth-child(4) { transition-delay: 0.2s; }
+    .tech-card:nth-child(5) { transition-delay: 0.25s; }
+    .tech-card:nth-child(6) { transition-delay: 0.3s; }
+    .tech-card:nth-child(7) { transition-delay: 0.35s; }
+    .tech-card:nth-child(8) { transition-delay: 0.4s; }
+    .tech-card:nth-child(9) { transition-delay: 0.45s; }
+    .tech-card:nth-child(10) { transition-delay: 0.5s; }
+    
+    .project-card:nth-child(1) { transition-delay: 0.1s; }
+    .project-card:nth-child(2) { transition-delay: 0.2s; }
+    .project-card:nth-child(3) { transition-delay: 0.3s; }
+    .project-card:nth-child(4) { transition-delay: 0.4s; }
+
+    /* Floating animation for decorative elements */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+    }
+    
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+    }
+    
+    .animate-float {
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    .animate-float-slow {
+      animation: floatSlow 8s ease-in-out infinite;
     }
   </style>
 </head>
 <body class="antialiased">
-  <div id="app" class="min-h-screen flex flex-col bg-[#131518]">
+  <div id="app" class="min-h-screen flex flex-col bg-[#faf9f6]">
     
-    <nav class="absolute top-0 left-0 right-0 z-40 nav-glass">
+    <nav class="absolute top-0 left-0 right-0 z-40 nav-glass reveal" style="transform: translateY(-20px);">
       <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
-          <div class="flex items-center space-x-3">
-            <span class="text-2xl font-bold gradient-text drop-shadow-lg tracking-tight">JC</span>
-            <span class="hidden sm:inline text-[#d4d9e6] font-semibold tracking-tight">John Paul Corre</span>
+          <div class="flex items-center space-x-2">
+            <span class="text-2xl font-bold text-[#1e1e1e] tracking-tight font-['Space_Grotesk']">JC</span>
+            <span class="hidden sm:inline text-[#4a4a4a] font-medium text-sm">John Paul Corre</span>
           </div>
           <div class="hidden md:flex space-x-8 text-sm font-medium">
-            <a href="#" @click.prevent="scrollToSection('about')" class="text-[#c5cad8] hover:text-[#c7a16b] transition duration-200 font-medium">About</a>
-            <a href="#" @click.prevent="scrollToSection('techstack')" class="text-[#c5cad8] hover:text-[#c7a16b] transition duration-200">Stack</a>
-            <a href="#" @click.prevent="scrollToSection('projects')" class="text-[#c5cad8] hover:text-[#c7a16b] transition duration-200">Projects</a>
-            <a href="#" @click.prevent="scrollToSection('contact')" class="text-[#c5cad8] hover:text-[#c7a16b] transition duration-200">Contact</a>
+            <a href="#" @click.prevent="scrollToSection('about')" class="text-[#555555] hover:text-[#1e1e1e] transition duration-200">About</a>
+            <a href="#" @click.prevent="scrollToSection('techstack')" class="text-[#555555] hover:text-[#1e1e1e] transition duration-200">Stack</a>
+            <a href="#" @click.prevent="scrollToSection('projects')" class="text-[#555555] hover:text-[#1e1e1e] transition duration-200">Projects</a>
+            <a href="#" @click.prevent="scrollToSection('contact')" class="text-[#555555] hover:text-[#1e1e1e] transition duration-200">Contact</a>
           </div>
           <div class="md:hidden">
-            <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-[#c5cad8] focus:outline-none text-xl">
+            <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-[#2d2d2d] focus:outline-none text-xl">
               <i class="fas fa-bars"></i>
             </button>
           </div>
         </div>
-        <div v-if="mobileMenuOpen" class="md:hidden pb-4 pt-2 space-y-2 bg-[#1c1e24]/95 backdrop-blur-md rounded-2xl mt-2 px-5 shadow-xl border border-[#4a4f5a]">
-          <a href="#" @click.prevent="scrollToSection('about'); mobileMenuOpen = false" class="block py-2.5 text-[#e0e4ee] hover:text-[#c7a16b] font-medium">About</a>
-          <a href="#" @click.prevent="scrollToSection('techstack'); mobileMenuOpen = false" class="block py-2.5 text-[#e0e4ee] hover:text-[#c7a16b] font-medium">Stack</a>
-          <a href="#" @click.prevent="scrollToSection('projects'); mobileMenuOpen = false" class="block py-2.5 text-[#e0e4ee] hover:text-[#c7a16b] font-medium">Projects</a>
-          <a href="#" @click.prevent="scrollToSection('contact'); mobileMenuOpen = false" class="block py-2.5 text-[#e0e4ee] hover:text-[#c7a16b] font-medium">Contact</a>
+        <div v-if="mobileMenuOpen" class="md:hidden pb-4 pt-2 space-y-2 bg-white/95 backdrop-blur-md rounded-2xl mt-2 px-5 shadow-lg border border-[#e8e3da]">
+          <a href="#" @click.prevent="scrollToSection('about'); mobileMenuOpen = false" class="block py-2.5 text-[#2d2d2d] hover:text-[#b8956a] font-medium">About</a>
+          <a href="#" @click.prevent="scrollToSection('techstack'); mobileMenuOpen = false" class="block py-2.5 text-[#2d2d2d] hover:text-[#b8956a] font-medium">Stack</a>
+          <a href="#" @click.prevent="scrollToSection('projects'); mobileMenuOpen = false" class="block py-2.5 text-[#2d2d2d] hover:text-[#b8956a] font-medium">Projects</a>
+          <a href="#" @click.prevent="scrollToSection('contact'); mobileMenuOpen = false" class="block py-2.5 text-[#2d2d2d] hover:text-[#b8956a] font-medium">Contact</a>
         </div>
       </div>
     </nav>
 
-    <div class="cover-banner"></div>
+    <!-- Cover Banner with decorative elements -->
+    <div class="cover-banner reveal relative">
+      <!-- Decorative code bracket PNG -->
+      <img src="https://cdn-icons-png.flaticon.com/512/2721/2721287.png" 
+           class="absolute top-8 right-12 w-16 h-16 opacity-20 animate-float hidden md:block" 
+           alt="code decoration">
+      <img src="https://cdn-icons-png.flaticon.com/512/6132/6132221.png" 
+           class="absolute bottom-6 left-10 w-12 h-12 opacity-25 animate-float-slow hidden md:block" 
+           alt="tech decoration">
+    </div>
 
-    <div class="profile-container">
+    <!-- Profile with decorative ring -->
+    <div class="profile-container reveal-scale relative">
+      <!-- Decorative dots around profile -->
+      <img src="https://cdn-icons-png.flaticon.com/512/1828/1828911.png" 
+           class="absolute -top-4 -right-8 w-8 h-8 opacity-15 animate-float hidden md:block" 
+           alt="star decoration">
       <div class="profile-ring">
         <img src="profile.jpg" alt="John Paul Corre profile picture">
       </div>
     </div>
 
     <main class="flex-grow">
-      <section id="about" class="about-section pb-20 px-4 max-w-6xl mx-auto">
-        <div class="flex flex-col items-center text-center">
+      <!-- About Section with decorative elements -->
+      <section id="about" class="about-section pb-20 px-4 max-w-5xl mx-auto relative">
+        <!-- Decorative circles -->
+        <div class="decorative-circle w-64 h-64 -top-20 -left-20" style="background: rgba(184, 149, 106, 0.04);"></div>
+        <div class="decorative-circle w-48 h-48 -bottom-10 -right-10" style="background: rgba(95, 107, 122, 0.03);"></div>
+        
+        <div class="flex flex-col items-center text-center relative z-10">
           <div class="flex-1">
-            <div class="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-semibold bg-[#2a2e36] text-[#eef2fb] mb-4 border border-[#9a8464] shadow-sm">
-              <span class="w-2 h-2 bg-emerald-400 rounded-full mr-2 animate-pulse"></span> Available for internship or any positions
+            <div class="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium bg-[#f3f0eb] text-[#3a3a3a] mb-5 border border-[#e2dbd0] reveal">
+              <span class="w-2 h-2 bg-emerald-500 rounded-full mr-2 animate-pulse"></span> Open to internship opportunities
             </div>
-            <h1 class="text-4xl md:text-6xl font-extrabold text-[#f2f6ff] leading-tight tracking-tight">
+            <h1 class="text-4xl md:text-6xl font-bold text-[#1a1a1a] leading-tight tracking-tight reveal">
               John Paul Corre
             </h1>
-            <p class="text-xl md:text-2xl gradient-text mt-2 font-semibold">
-              Full-Stack Developer · PHP · Vue · Python
+            <p class="text-xl md:text-2xl gradient-text mt-2 font-semibold reveal">
+              Full-Stack Developer · PHP · Vue · TypeScript · Python
             </p>
-            <p class="mt-5 text-[#cdd2df] max-w-xl mx-auto leading-relaxed text-base">
-              Passionate about building dynamic web applications with clean code. 
-              I blend modern JavaScript frameworks with robust PHP & Python backends. 
-              Currently seeking an internship to contribute to real-world products.
+            <p class="mt-5 text-[#555555] max-w-xl mx-auto leading-relaxed text-base reveal">
+              Crafting dynamic web applications with clean, modern code. Blending JavaScript frameworks with robust PHP & Python backends. Currently seeking an internship to build impactful products.
             </p>
-            <div class="flex flex-wrap gap-4 mt-8 justify-center">
-              <a href="#" @click.prevent="scrollToSection('contact')" class="btn-primary px-7 py-3 rounded-full font-semibold shadow-xl transition flex items-center gap-2 text-base">
-                <i class="fas fa-paper-plane"></i> Let's talk
+            
+            <!-- Decorative tech icons floating -->
+            <div class="flex justify-center gap-2 mt-6 reveal">
+              <img src="https://cdn-icons-png.flaticon.com/512/5968/5968333.png" class="w-6 h-6 opacity-20" alt="php">
+              <img src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png" class="w-6 h-6 opacity-20" alt="js">
+              <img src="https://cdn-icons-png.flaticon.com/512/5968/5968350.png" class="w-6 h-6 opacity-20" alt="python">
+              <img src="https://cdn-icons-png.flaticon.com/512/1260/1260667.png" class="w-6 h-6 opacity-20" alt="vue">
+            </div>
+            
+            <div class="flex flex-wrap gap-4 mt-8 justify-center reveal">
+              <a href="#" @click.prevent="scrollToSection('contact')" class="btn-primary px-7 py-3 font-semibold transition flex items-center gap-2 text-base">
+                <i class="fas fa-paper-plane text-sm"></i> Let's talk
               </a>
-              <a href="#" @click.prevent="scrollToSection('projects')" class="btn-outline px-7 py-3 rounded-full font-semibold transition flex items-center gap-2 text-base">
-                <i class="fas fa-code"></i> View work
+              <a href="#" @click.prevent="scrollToSection('projects')" class="btn-outline px-7 py-3 font-semibold transition flex items-center gap-2 text-base">
+                <i class="fas fa-code text-sm"></i> View work
               </a>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="techstack" class="py-20 section-mid border-y border-[#363c44]">
-        <div class="max-w-6xl mx-auto px-4">
-          <h2 class="text-3xl md:text-4xl font-bold section-title">
-            <i class="fas fa-microchip text-[#c7a16b] mr-2"></i> Tech Stack
+      <!-- Tech Stack Section -->
+      <section id="techstack" class="py-20 section-mid border-y border-[#efebe5] relative">
+        <!-- Decorative element -->
+        <img src="https://cdn-icons-png.flaticon.com/512/1055/1055687.png" 
+             class="absolute top-10 right-10 w-20 h-20 opacity-5 animate-float-slow hidden lg:block" 
+             alt="gear decoration">
+        
+        <div class="max-w-6xl mx-auto px-4 relative z-10">
+          <h2 class="text-3xl md:text-4xl font-bold section-title reveal-left">
+            <i class="fas fa-microchip text-[#b8956a] mr-2"></i> Tech Stack
           </h2>
-          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 mt-10">
-            <div v-for="tech in technologies" :key="tech.name" 
-                 class="metal-card rounded-2xl p-5 text-center card-hover flex flex-col items-center justify-center gap-3 transition-all">
-              <i :class="tech.icon" class="text-4xl" :style="{ color: tech.color, filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))' }"></i>
-              <span class="font-bold text-lg text-[#eef2fc]">{{ tech.name }}</span>
-              <span class="text-xs font-medium text-[#a9aebd] bg-[#1e2128] px-3 py-1 rounded-full">{{ tech.level }}</span>
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-10">
+            <div v-for="(tech, index) in technologies" :key="tech.name" 
+                 class="metal-card rounded-2xl p-5 text-center card-hover flex flex-col items-center justify-center gap-3 transition-all tech-card reveal-scale">
+              <i :class="tech.icon" class="text-4xl" :style="{ color: tech.color, filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.05))' }"></i>
+              <span class="font-semibold text-base text-[#2d2d2d]">{{ tech.name }}</span>
+              <span class="text-xs font-medium text-[#6b6b6b] bg-[#f5f2ed] px-3 py-1 rounded-full">{{ tech.level }}</span>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Projects Section - Clean, minimal, demo link stands out naturally -->
-      <section id="projects" class="py-20 px-4 max-w-6xl mx-auto bg-[#181b20] border-t border-[#323841]">
-        <h2 class="text-3xl md:text-4xl font-bold section-title">
-          <i class="fas fa-laptop-code text-[#c7a16b] mr-2"></i> Featured Projects
+      <!-- Projects Section -->
+      <section id="projects" class="py-20 px-4 max-w-6xl mx-auto bg-[#faf9f6] relative">
+        <!-- Decorative dots pattern -->
+        <div class="decorative-dots absolute top-0 right-0 w-40 h-40 hidden md:block">
+          <img src="https://cdn-icons-png.flaticon.com/512/3208/3208684.png" class="w-full h-full opacity-10" alt="dots pattern">
+        </div>
+        
+        <h2 class="text-3xl md:text-4xl font-bold section-title reveal-left relative z-10">
+          <i class="fas fa-laptop-code text-[#b8956a] mr-2"></i> Featured Projects
         </h2>
         
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
-          <div v-for="project in projects" :key="project.id" 
-               class="metal-card rounded-2xl overflow-hidden card-hover flex flex-col">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-7 mt-10 relative z-10">
+          <div v-for="(project, index) in projects" :key="project.id" 
+               class="metal-card rounded-2xl overflow-hidden card-hover flex flex-col project-card reveal-scale">
             
-            <!-- Project image with subtle hover -->
-            <div class="project-image-placeholder">
-              <i :class="project.icon" class="text-5xl drop-shadow-md"></i>
-              <div class="project-image-overlay">
-                <span class="text-white font-medium text-sm">View project →</span>
+            <div class="project-image-placeholder relative">
+              <!-- Project thumbnail images from Unsplash -->
+              <img v-if="project.id === 1" src="https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=400&h=200&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-30" alt="weather">
+              <img v-if="project.id === 2" src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&h=200&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-30" alt="music">
+              <img v-if="project.id === 3" src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=400&h=200&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-30" alt="quiz">
+              <img v-if="project.id === 4" src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=200&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-30" alt="employee">
+              
+              <i :class="project.icon" class="text-5xl drop-shadow-sm relative z-10"></i>
+              <div class="project-image-overlay z-20">
+                <span class="text-white font-medium text-sm bg-black/30 px-4 py-2 rounded-full">View project →</span>
               </div>
             </div>
             
             <div class="p-6 flex flex-col flex-grow">
-              <h3 class="font-bold text-2xl text-[#f0f3fc]">{{ project.title }}</h3>
-              <p class="text-[#c9cfdd] text-base mt-2 flex-grow leading-relaxed">{{ project.description }}</p>
+              <h3 class="font-bold text-xl text-[#1a1a1a]">{{ project.title }}</h3>
+              <p class="text-[#555555] text-sm mt-2 flex-grow leading-relaxed">{{ project.description }}</p>
               
               <div class="flex flex-wrap gap-2 mt-5">
-                <span v-for="tag in project.tags" :key="tag" class="badge-tech text-xs font-semibold tracking-wide">{{ tag }}</span>
+                <span v-for="tag in project.tags" :key="tag" class="badge-tech text-xs font-medium">{{ tag }}</span>
               </div>
               
-              <!-- Clean action row -->
-              <div class="mt-5 pt-4 border-t border-[#424752] flex justify-between items-center">
+              <div class="mt-5 pt-4 border-t border-[#efebe5] flex justify-between items-center">
                 <a :href="project.link" target="_blank" class="demo-link">
                   Live demo <i class="fas fa-arrow-right text-xs"></i>
                 </a>
-                <a :href="project.github" target="_blank" class="text-[#969dad] hover:text-[#cbd0dd] text-sm flex items-center gap-1.5 transition font-medium">
+                <a :href="project.github" target="_blank" class="text-[#6b6b6b] hover:text-[#1e1e1e] text-sm flex items-center gap-1.5 transition font-medium">
                   <i class="fab fa-github"></i> Source
                 </a>
               </div>
@@ -436,44 +557,57 @@
         </div>
       </section>
 
-      <section id="contact" class="py-20 section-warm">
-        <div class="max-w-4xl mx-auto px-4 text-center">
-          <h2 class="text-3xl md:text-4xl font-bold section-title inline-block mx-auto">
-            <i class="fas fa-envelope-open-text text-[#c7a16b] mr-2"></i> Get in touch
+      <!-- Contact Section -->
+      <section id="contact" class="py-20 section-warm relative">
+        <!-- Decorative elements -->
+        <img src="https://cdn-icons-png.flaticon.com/512/2343/2343699.png" 
+             class="absolute top-10 left-10 w-16 h-16 opacity-10 animate-float hidden md:block" 
+             alt="email decoration">
+        <img src="https://cdn-icons-png.flaticon.com/512/2991/2991604.png" 
+             class="absolute bottom-10 right-10 w-14 h-14 opacity-10 animate-float-slow hidden md:block" 
+             alt="location decoration">
+        
+        <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
+          <h2 class="text-3xl md:text-4xl font-bold section-title inline-block mx-auto reveal-left">
+            <i class="fas fa-envelope-open-text text-[#b8956a] mr-2"></i> Get in touch
           </h2>
-          <p class="text-[#cdd2df] mt-5 max-w-xl mx-auto text-base leading-relaxed">
-            I'm excited about internship opportunities where I can leverage PHP, JavaScript, Python, and modern frameworks.
-            Drop me a message!
+          <p class="text-[#555555] mt-5 max-w-xl mx-auto text-base leading-relaxed reveal">
+            I'm eager to contribute to innovative teams. Whether it's PHP, JavaScript, or Python — let's connect.
           </p>
-          <div class="mt-10 metal-card-light rounded-2xl shadow-2xl p-7 md:p-8 max-w-lg mx-auto">
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 text-[#e0e5f2] mb-6 text-base">
+          <div class="mt-10 metal-card-light rounded-2xl shadow-sm p-7 md:p-8 max-w-lg mx-auto reveal-scale relative">
+            <!-- Small decorative icons -->
+            <img src="https://cdn-icons-png.flaticon.com/512/1828/1828911.png" 
+                 class="absolute -top-3 -right-3 w-8 h-8 opacity-20" 
+                 alt="star">
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 text-[#3a3a3a] mb-6 text-sm">
               <div class="flex items-center gap-2.5">
-                <i class="fas fa-map-marker-alt text-[#c7a16b] text-lg"></i> <span>Manila, PH (Remote friendly)</span>
+                <i class="fas fa-map-marker-alt text-[#b8956a]"></i> <span>Manila, PH (Remote friendly)</span>
               </div>
-              <div class="hidden sm:block text-[#7c838f]">|</div>
+              <div class="hidden sm:block text-[#c0b9ac]">|</div>
               <div class="flex items-center gap-2.5">
-                <i class="fas fa-envelope text-[#c7a16b] text-lg"></i> <span class="font-mono text-sm">jvanpablo455@gmail.com</span>
+                <i class="fas fa-envelope text-[#b8956a]"></i> <span class="font-mono text-sm">jvanpablo455@gmail.com</span>
               </div>
             </div>
-            <a href="mailto:jvanpablo455@gmail.com" class="inline-block w-full sm:w-auto btn-primary px-8 py-3.5 rounded-full shadow-lg transition transform hover:scale-[1.02] font-bold text-base">
+            <a href="mailto:jvanpablo455@gmail.com" class="inline-block w-full sm:w-auto btn-primary px-8 py-3.5 shadow-md transition transform hover:scale-[1.02] font-semibold text-base">
               <i class="fas fa-paper-plane mr-2"></i> Send Email
             </a>
-            <div class="flex justify-center space-x-6 mt-7 text-3xl text-[#9fa6b7]">
-              <a href="https://github.com/P4blo0o0" target="_blank" class="hover:text-[#c7a16b] transition-all duration-200"><i class="fab fa-github"></i></a>
-              <a href="https://www.linkedin.com/in/john-paul-daiz-corre-504006398/" target="_blank" class="hover:text-[#c7a16b] transition-all duration-200"><i class="fab fa-linkedin"></i></a> 
-              <a href="https://www.freecodecamp.org/polsz" target="_blank" class="hover:text-[#c7a16b] transition-all duration-200">
-  <i class="fab fa-free-code-camp"></i>
-</a>           
+            <div class="flex justify-center space-x-6 mt-7 text-2xl text-[#8c8c8c]">
+              <a href="https://github.com/P4blo0o0" target="_blank" class="hover:text-[#1e1e1e] transition-colors duration-200"><i class="fab fa-github"></i></a>
+              <a href="https://www.linkedin.com/in/john-paul-daiz-corre-504006398/" target="_blank" class="hover:text-[#1e1e1e] transition-colors duration-200"><i class="fab fa-linkedin"></i></a> 
+              <a href="https://www.freecodecamp.org/polsz" target="_blank" class="hover:text-[#1e1e1e] transition-colors duration-200"><i class="fab fa-free-code-camp"></i></a>           
             </div>
           </div>
         </div>
       </section>
     </main>
 
-    <footer class="bg-[#12151a] border-t border-[#2c2f38] py-6 text-center text-[#8a919f] text-sm">
+    <footer class="bg-white border-t border-[#efebe5] py-6 text-center text-[#8c8c8c] text-sm reveal relative">
+      <!-- Decorative line -->
+      <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-24 h-px bg-gradient-to-r from-transparent via-[#b8956a] to-transparent"></div>
       <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center">
         <p>&copy; 2025 John Paul Corre – built with Vue & Tailwind</p>
-        <p class="mt-2 sm:mt-0 font-medium">PHP · Python · JavaScript · MySQL</p>
+        <p class="mt-2 sm:mt-0 font-medium text-[#5a5a5a]">PHP · Python · JavaScript · MySQL</p>
       </div>
     </footer>
   </div>
@@ -486,19 +620,19 @@
         return {
           mobileMenuOpen: false,
           technologies: [
-            { name: 'PHP', icon: 'fab fa-php', color: '#99a9d4', level: 'Backend' },
-            { name: 'JavaScript', icon: 'fab fa-js-square', color: '#f7df1e', level: 'Language' },
-            { name: 'CSS', icon: 'fab fa-css3-alt', color: '#2c6fbb', level: 'Styling' },
-            { name: 'HTML', icon: 'fab fa-html5', color: '#f0652e', level: 'Markup' },
-            { name: 'Express.js', icon: 'fab fa-node-js', color: '#68a063', level: 'Framework' },
-            { name: 'Python', icon: 'fab fa-python', color: '#3776ab', level: 'Language' },
-            { name: 'FastAPI', icon: 'fas fa-bolt', color: '#009688', level: 'Framework' },
-            { name: 'Vue.js', icon: 'fab fa-vuejs', color: '#6fbf73', level: 'Framework' },
-            { name: 'MySQL', icon: 'fas fa-database', color: '#e09d5e', level: 'Database' },
-            { name: 'Git', icon: 'fab fa-git-alt', color: '#f26522', level: 'Version' },
-            { name: 'Node.js', icon: 'fab fa-node-js', color: '#68a063', level: 'Runtime' },
-            { name: 'Tailwind', icon: 'fas fa-wind', color: '#6bc2f0', level: 'CSS Framework' },
-            { name: 'Bootstrap', icon: 'fab fa-bootstrap', color: '#7952b3', level: 'CSS Framework' },
+            { name: 'PHP', icon: 'fab fa-php', color: '#8993be', level: 'Backend' },
+            { name: 'JavaScript', icon: 'fab fa-js-square', color: '#e6c943', level: 'Language' },
+            { name: 'CSS', icon: 'fab fa-css3-alt', color: '#3b82c4', level: 'Styling' },
+            { name: 'HTML', icon: 'fab fa-html5', color: '#e07b39', level: 'Markup' },
+            { name: 'Express.js', icon: 'fab fa-node-js', color: '#539e43', level: 'Framework' },
+            { name: 'Python', icon: 'fab fa-python', color: '#3b7aab', level: 'Language' },
+            { name: 'FastAPI', icon: 'fas fa-bolt', color: '#05998b', level: 'Framework' },
+            { name: 'Vue.js', icon: 'fab fa-vuejs', color: '#42b883', level: 'Framework' },
+            { name: 'MySQL', icon: 'fas fa-database', color: '#e0914b', level: 'Database' },
+            { name: 'Git', icon: 'fab fa-git-alt', color: '#e55c2e', level: 'Version' },
+            { name: 'Node.js', icon: 'fab fa-node-js', color: '#539e43', level: 'Runtime' },
+            { name: 'Tailwind', icon: 'fas fa-wind', color: '#38bdf8', level: 'CSS Framework' },
+            { name: 'Bootstrap', icon: 'fab fa-bootstrap', color: '#7b5ea7', level: 'CSS Framework' },
           ],
           projects: [
             {
@@ -523,8 +657,8 @@
               id: 3,
               title: 'Quiz Bee',
               icon: 'fas fa-brain',
-              description: 'Interactive quiz application with multiple categories, score tracking, and dynamic question loading. Test your knowledge!',
-              tags: ['JavaScript', 'HTML', 'CSS', 'Quiz'],
+              description: 'Interactive quiz application with multiple categories, score tracking, and dynamic question loading.',
+              tags: ['TypeScript', 'Vue.js', 'Quiz'],
               link: 'https://polszstack.github.io/Quiz-Bee/',
               github: 'https://github.com/polszstack/Quiz-Bee'
             },
@@ -533,7 +667,7 @@
               title: 'Employee Management',
               icon: 'fas fa-users-cog',
               description: 'Simple employee management system for adding, viewing, and organizing employee records with a clean interface.',
-              tags: ['PHP', 'MySQL', 'JavaScript', 'HTML', 'CSS'],
+              tags: ['Express.js', 'MySQL', 'Vue.js', 'Tailwind'],
               link: 'https://employee-management-hr-plum.vercel.app/',
               github: 'https://github.com/polszstack/Employee-Management'
             }
@@ -546,7 +680,33 @@
           if (element) {
             element.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
+        },
+        setupScrollAnimations() {
+          const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+          };
+
+          const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          }, observerOptions);
+
+          // Observe all elements with reveal classes
+          const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+          revealElements.forEach(el => observer.observe(el));
         }
+      },
+      mounted() {
+        // Initialize scroll animations after Vue has rendered the DOM
+        this.$nextTick(() => {
+          this.setupScrollAnimations();
+        });
       }
     }).mount('#app');
   </script>
