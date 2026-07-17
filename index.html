@@ -5,11 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>John Paul Corre · Tech Intern Portfolio</title>
   <!-- Tailwind CSS via CDN -->
-  <script src="https://cdn.tailwindcss.com">
-  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
   <!-- Vue 3 CDN -->
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js">
-  </script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <!-- Font Awesome 6 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
@@ -309,11 +307,11 @@
       border-radius: 3px;
     }
 
-    /* Scroll animation classes */
+    /* Scroll animation classes - Handles entry and exit states smoothly */
     .reveal {
       opacity: 0;
       transform: translateY(30px);
-      transition: opacity 0.7s cubic-bezier(0.23, 1, 0.32, 1), transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+      transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1), transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
     }
     
     .reveal.visible {
@@ -324,7 +322,7 @@
     .reveal-left {
       opacity: 0;
       transform: translateX(-40px);
-      transition: opacity 0.7s cubic-bezier(0.23, 1, 0.32, 1), transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+      transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1), transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
     }
     
     .reveal-left.visible {
@@ -335,7 +333,7 @@
     .reveal-right {
       opacity: 0;
       transform: translateX(40px);
-      transition: opacity 0.7s cubic-bezier(0.23, 1, 0.32, 1), transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+      transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1), transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
     }
     
     .reveal-right.visible {
@@ -346,7 +344,7 @@
     .reveal-scale {
       opacity: 0;
       transform: scale(0.9);
-      transition: opacity 0.7s cubic-bezier(0.23, 1, 0.32, 1), transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+      transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1), transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
     }
     
     .reveal-scale.visible {
@@ -684,15 +682,17 @@
         setupScrollAnimations() {
           const observerOptions = {
             root: null,
-            rootMargin: '0px',
-            threshold: 0.1
+            rootMargin: '-60px 0px -60px 0px', // Triggers slightly inside viewport limits for seamless reversal transitions
+            threshold: 0.05
           };
 
-          const observer = new IntersectionObserver((entries, observer) => {
+          const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
               if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
-                observer.unobserve(entry.target);
+              } else {
+                // Removes the class when element travels outside viewport boundaries (handles reversing up or down)
+                entry.target.classList.remove('visible');
               }
             });
           }, observerOptions);
