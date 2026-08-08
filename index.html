@@ -11,7 +11,6 @@
   <!-- Font Awesome 6 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    /* Modern, clean design with subtle gradients and smooth interactions */
     @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
     
     body {
@@ -88,7 +87,6 @@
       border-radius: 0 0 40px 40px;
     }
     
-    /* Decorative floating elements */
     .decorative-circle {
       position: absolute;
       border-radius: 50%;
@@ -307,7 +305,6 @@
       border-radius: 3px;
     }
 
-    /* Scroll animation classes - Handles entry and exit states smoothly */
     .reveal {
       opacity: 0;
       transform: translateY(30px);
@@ -352,7 +349,6 @@
       transform: scale(1);
     }
     
-    /* Staggered delays for tech cards */
     .tech-card:nth-child(1) { transition-delay: 0.05s; }
     .tech-card:nth-child(2) { transition-delay: 0.1s; }
     .tech-card:nth-child(3) { transition-delay: 0.15s; }
@@ -363,13 +359,15 @@
     .tech-card:nth-child(8) { transition-delay: 0.4s; }
     .tech-card:nth-child(9) { transition-delay: 0.45s; }
     .tech-card:nth-child(10) { transition-delay: 0.5s; }
+    .tech-card:nth-child(11) { transition-delay: 0.55s; }
+    .tech-card:nth-child(12) { transition-delay: 0.6s; }
+    .tech-card:nth-child(13) { transition-delay: 0.65s; }
     
     .project-card:nth-child(1) { transition-delay: 0.1s; }
     .project-card:nth-child(2) { transition-delay: 0.2s; }
     .project-card:nth-child(3) { transition-delay: 0.3s; }
     .project-card:nth-child(4) { transition-delay: 0.4s; }
 
-    /* Floating animation for decorative elements */
     @keyframes float {
       0%, 100% { transform: translateY(0px) rotate(0deg); }
       50% { transform: translateY(-20px) rotate(5deg); }
@@ -420,9 +418,7 @@
       </div>
     </nav>
 
-    <!-- Cover Banner with decorative elements -->
     <div class="cover-banner reveal relative">
-      <!-- Decorative code bracket PNG -->
       <img src="https://cdn-icons-png.flaticon.com/512/2721/2721287.png" 
            class="absolute top-8 right-12 w-16 h-16 opacity-20 animate-float hidden md:block" 
            alt="code decoration">
@@ -431,9 +427,7 @@
            alt="tech decoration">
     </div>
 
-    <!-- Profile with decorative ring -->
     <div class="profile-container reveal-scale relative">
-      <!-- Decorative dots around profile -->
       <img src="https://cdn-icons-png.flaticon.com/512/1828/1828911.png" 
            class="absolute -top-4 -right-8 w-8 h-8 opacity-15 animate-float hidden md:block" 
            alt="star decoration">
@@ -443,9 +437,7 @@
     </div>
 
     <main class="flex-grow">
-      <!-- About Section with decorative elements -->
       <section id="about" class="about-section pb-20 px-4 max-w-5xl mx-auto relative">
-        <!-- Decorative circles -->
         <div class="decorative-circle w-64 h-64 -top-20 -left-20" style="background: rgba(184, 149, 106, 0.04);"></div>
         <div class="decorative-circle w-48 h-48 -bottom-10 -right-10" style="background: rgba(95, 107, 122, 0.03);"></div>
         
@@ -464,7 +456,6 @@
               Crafting dynamic web applications with clean, modern code. Blending JavaScript frameworks with robust PHP & Python backends. Currently seeking an internship to build impactful products.
             </p>
             
-            <!-- Decorative tech icons floating -->
             <div class="flex justify-center gap-2 mt-6 reveal">
               <img src="https://cdn-icons-png.flaticon.com/512/5968/5968333.png" class="w-6 h-6 opacity-20" alt="php">
               <img src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png" class="w-6 h-6 opacity-20" alt="js">
@@ -484,9 +475,7 @@
         </div>
       </section>
 
-      <!-- Tech Stack Section -->
       <section id="techstack" class="py-20 section-mid border-y border-[#efebe5] relative">
-        <!-- Decorative element -->
         <img src="https://cdn-icons-png.flaticon.com/512/1055/1055687.png" 
              class="absolute top-10 right-10 w-20 h-20 opacity-5 animate-float-slow hidden lg:block" 
              alt="gear decoration">
@@ -506,9 +495,7 @@
         </div>
       </section>
 
-      <!-- Projects Section -->
       <section id="projects" class="py-20 px-4 max-w-6xl mx-auto bg-[#faf9f6] relative">
-        <!-- Decorative dots pattern -->
         <div class="decorative-dots absolute top-0 right-0 w-40 h-40 hidden md:block">
           <img src="https://cdn-icons-png.flaticon.com/512/3208/3208684.png" class="w-full h-full opacity-10" alt="dots pattern">
         </div>
@@ -522,11 +509,10 @@
                class="metal-card rounded-2xl overflow-hidden card-hover flex flex-col project-card reveal-scale">
             
             <div class="project-image-placeholder relative">
-              <!-- Project thumbnail images from Unsplash -->
               <img v-if="project.id === 1" src="https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=400&h=200&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-30" alt="weather">
               <img v-if="project.id === 2" src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&h=200&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-30" alt="music">
               <img v-if="project.id === 3" src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=400&h=200&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-30" alt="quiz">
-              <img v-if="project.id === 4" src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=200&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-30" alt="employee">
+              <img v-if="project.id === 4" src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=200&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-30" alt="photobooth">
               
               <i :class="project.icon" class="text-5xl drop-shadow-sm relative z-10"></i>
               <div class="project-image-overlay z-20">
@@ -555,9 +541,7 @@
         </div>
       </section>
 
-      <!-- Contact Section -->
       <section id="contact" class="py-20 section-warm relative">
-        <!-- Decorative elements -->
         <img src="https://cdn-icons-png.flaticon.com/512/2343/2343699.png" 
              class="absolute top-10 left-10 w-16 h-16 opacity-10 animate-float hidden md:block" 
              alt="email decoration">
@@ -573,7 +557,6 @@
             I'm eager to contribute to innovative teams. Whether it's PHP, JavaScript, or Python — let's connect.
           </p>
           <div class="mt-10 metal-card-light rounded-2xl shadow-sm p-7 md:p-8 max-w-lg mx-auto reveal-scale relative">
-            <!-- Small decorative icons -->
             <img src="https://cdn-icons-png.flaticon.com/512/1828/1828911.png" 
                  class="absolute -top-3 -right-3 w-8 h-8 opacity-20" 
                  alt="star">
@@ -591,7 +574,7 @@
               <i class="fas fa-paper-plane mr-2"></i> Send Email
             </a>
             <div class="flex justify-center space-x-6 mt-7 text-2xl text-[#8c8c8c]">
-              <a href="https://github.com/P4blo0o0" target="_blank" class="hover:text-[#1e1e1e] transition-colors duration-200"><i class="fab fa-github"></i></a>
+              <a href="https://github.com/polszstack" target="_blank" class="hover:text-[#1e1e1e] transition-colors duration-200"><i class="fab fa-github"></i></a>
               <a href="https://www.linkedin.com/in/john-paul-daiz-corre-504006398/" target="_blank" class="hover:text-[#1e1e1e] transition-colors duration-200"><i class="fab fa-linkedin"></i></a> 
               <a href="https://www.freecodecamp.org/polsz" target="_blank" class="hover:text-[#1e1e1e] transition-colors duration-200"><i class="fab fa-free-code-camp"></i></a>           
             </div>
@@ -601,7 +584,6 @@
     </main>
 
     <footer class="bg-white border-t border-[#efebe5] py-6 text-center text-[#8c8c8c] text-sm reveal relative">
-      <!-- Decorative line -->
       <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-24 h-px bg-gradient-to-r from-transparent via-[#b8956a] to-transparent"></div>
       <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center">
         <p>&copy; 2025 John Paul Corre – built with Vue & Tailwind</p>
@@ -660,7 +642,15 @@
               link: 'https://polszstack.github.io/Quiz-Bee/',
               github: 'https://github.com/polszstack/Quiz-Bee'
             },
-             
+            {
+              id: 4,
+              title: 'Photo Booth',
+              icon: 'fas fa-camera-retro',
+              description: 'Full-stack photo booth app built with Vue.js, Express.js, TypeScript, and Tailwind. Snap, filter, and share instantly.',
+              tags: ['Vue.js', 'Express.js', 'TypeScript', 'Tailwind'],
+              link: 'https://photo-booth-clean.vercel.app/',
+              github: 'https://github.com/polszstack/Photo-Booth'
+            }
           ]
         }
       },
@@ -674,7 +664,7 @@
         setupScrollAnimations() {
           const observerOptions = {
             root: null,
-            rootMargin: '-60px 0px -60px 0px', // Triggers slightly inside viewport limits for seamless reversal transitions
+            rootMargin: '-60px 0px -60px 0px',
             threshold: 0.05
           };
 
@@ -683,19 +673,16 @@
               if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
               } else {
-                // Removes the class when element travels outside viewport boundaries (handles reversing up or down)
                 entry.target.classList.remove('visible');
               }
             });
           }, observerOptions);
 
-          // Observe all elements with reveal classes
           const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
           revealElements.forEach(el => observer.observe(el));
         }
       },
       mounted() {
-        // Initialize scroll animations after Vue has rendered the DOM
         this.$nextTick(() => {
           this.setupScrollAnimations();
         });
