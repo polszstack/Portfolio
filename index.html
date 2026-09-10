@@ -121,12 +121,73 @@
     .mobile-menu-enter-active, .mobile-menu-leave-active{ transition:opacity .18s ease, transform .18s ease; }
     .mobile-menu-enter-from, .mobile-menu-leave-to{ opacity:0; transform:translateY(-6px); }
 
-    .terminal{
-      background:var(--code-bg);
-      border-radius:14px;
-      overflow:hidden;
-      box-shadow:0 24px 60px -20px rgba(18,20,27,0.45);
-      border:1px solid #23262f;
+    /* Laptop Frame Styles */
+    .laptop-wrapper {
+      position: relative;
+      margin: 0 auto;
+      width: 100%;
+      max-width: 580px;
+    }
+    .laptop-screen {
+      background: #101217; /* Darker bezel */
+      border: 1px solid var(--code-line);
+      border-radius: 14px 14px 0 0;
+      padding: 14px 14px 20px 14px;
+      position: relative;
+      box-shadow: 0 24px 60px -15px rgba(18,20,27,0.5);
+    }
+    .laptop-screen::after {
+      /* Webcam dot */
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #08090b;
+      border: 1px solid #23262f;
+    }
+    .laptop-base {
+      position: relative;
+      height: 14px;
+      background: linear-gradient(to bottom, var(--surface-2), var(--line-strong));
+      border: 1px solid var(--line-strong);
+      border-top: none;
+      border-radius: 0 0 16px 16px;
+      display: flex;
+      justify-content: center;
+      z-index: 2;
+    }
+    .laptop-base::before {
+      /* Opening notch */
+      content: '';
+      width: 70px;
+      height: 5px;
+      background: var(--line-strong);
+      border-radius: 0 0 4px 4px;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+    }
+    .laptop-base::after {
+      /* Drop shadow cast on the table */
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 4%;
+      width: 92%;
+      height: 10px;
+      background: radial-gradient(ellipse at center, rgba(18,20,27,0.3) 0%, rgba(18,20,27,0) 70%);
+      z-index: -1;
+    }
+
+    /* Terminal adjustments to sit inside the laptop */
+    .terminal {
+      background: var(--code-bg);
+      border-radius: 6px; /* Tighter radius for inner screen */
+      overflow: hidden;
+      border: 1px solid #000; /* Sharp inner screen edge */
+      box-shadow: inset 0 0 12px rgba(0,0,0,0.4);
     }
     .terminal-bar{
       display:flex; align-items:center; gap:8px;
@@ -325,23 +386,29 @@
           </div>
         </div>
 
+        <!-- LAPTOP COMPONENT ENCASING TERMINAL -->
         <div class="reveal-scale visible">
-          <div class="terminal" ref="terminalEl">
-            <div class="terminal-bar">
-              <span class="tl-dot" style="background:#EE6A5F;"></span>
-              <span class="tl-dot" style="background:#F5BD4F;"></span>
-              <span class="tl-dot" style="background:#61C454;"></span>
-              <span class="font-display ml-2" style="color:var(--code-muted); font-size:0.72rem;">corre@dev — zsh</span>
-            </div>
-            <div class="terminal-body">
-              <div class="term-line" v-for="(line, i) in displayed" :key="i">
-                <span class="term-prompt">{{ line.prompt }}<span v-if="!line.promptDone" class="dot-blink">▍</span></span>
-                <span v-if="line.promptDone" class="term-output ok">{{ line.output }}<span v-if="!line.outputDone" class="dot-blink">▍</span></span>
+          <div class="laptop-wrapper">
+            <div class="laptop-screen">
+              <div class="terminal" ref="terminalEl">
+                <div class="terminal-bar">
+                  <span class="tl-dot" style="background:#EE6A5F;"></span>
+                  <span class="tl-dot" style="background:#F5BD4F;"></span>
+                  <span class="tl-dot" style="background:#61C454;"></span>
+                  <span class="font-display ml-2" style="color:var(--code-muted); font-size:0.72rem;">corre@dev — zsh</span>
+                </div>
+                <div class="terminal-body">
+                  <div class="term-line" v-for="(line, i) in displayed" :key="i">
+                    <span class="term-prompt">{{ line.prompt }}<span v-if="!line.promptDone" class="dot-blink">▍</span></span>
+                    <span v-if="line.promptDone" class="term-output ok">{{ line.output }}<span v-if="!line.outputDone" class="dot-blink">▍</span></span>
+                  </div>
+                  <div v-if="typingDone" class="term-line">
+                    <span class="term-prompt"><span class="dot-blink">▍</span></span>
+                  </div>
+                </div>
               </div>
-              <div v-if="typingDone" class="term-line">
-                <span class="term-prompt"><span class="dot-blink">▍</span></span>
-              </div>
             </div>
+            <div class="laptop-base"></div>
           </div>
         </div>
 
