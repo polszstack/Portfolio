@@ -1,798 +1,184 @@
-<!DOCTYPE html>
-<html lang="en">
+ <!DOCTYPE html>
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>John Paul Corre · Full-Stack Developer</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-  <style>
-    /* ----- base & variables (same as original) ----- */
-    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
-    :root{
-      --bg:#F5F6F4;
-      --surface:#FFFFFF;
-      --surface-2:#EDEFEC;
-      --ink:#12151C;
-      --ink-soft:#4A5160;
-      --muted:#868D9B;
-      --line:#DEE1E1;
-      --line-strong:#C7CBCA;
-      --accent:#2F4FD1;
-      --accent-dark:#233B9E;
-      --accent-soft:#E4E9FB;
-      --amber:#C7811E;
-      --amber-soft:#F7E9D2;
-      --green:#1E8E5A;
-      --green-soft:#E1F1E8;
-      --red:#C6473F;
-      --code-bg:#12141B;
-      --code-panel:#181B24;
-      --code-text:#E7E9EF;
-      --code-muted:#7C8494;
-      --code-line:#262A36;
-      --code-blue:#7FA8F5;
-      --code-green:#8FD19E;
-      --code-amber:#F0C36D;
-    }
-    *{ box-sizing:border-box; }
-    html{ scroll-behavior:smooth; }
-    body{
-      margin:0;
-      background:var(--bg);
-      color:var(--ink);
-      font-family:'Inter',system-ui,-apple-system,sans-serif;
-      -webkit-font-smoothing:antialiased;
-      overflow-x:hidden;
-    }
-    .font-display{ font-family:'JetBrains Mono',ui-monospace,monospace; }
-    p,li{ line-height:1.7; color:var(--ink-soft); }
-    ::-webkit-scrollbar{ width:8px; }
-    ::-webkit-scrollbar-track{ background:var(--bg); }
-    ::-webkit-scrollbar-thumb{ background:var(--line-strong); border-radius:4px; }
-
-    .grid-paper{
-      background-image:
-        linear-gradient(var(--line) 1px, transparent 1px),
-        linear-gradient(90deg, var(--line) 1px, transparent 1px);
-      background-size: 34px 34px;
-      opacity:0.5;
-    }
-    .dot-blink{ animation:blink 1.1s steps(1) infinite; }
-    @keyframes blink{ 50%{ opacity:0; } }
-    .cursor-bar{
-      display:inline-block; width:2px; height:1em; background:var(--accent);
-      animation:blink 1s steps(1) infinite; vertical-align:-2px; margin-left:2px;
-    }
-    .pulse-dot{ position:relative; }
-    .pulse-dot::after{
-      content:''; position:absolute; inset:-4px; border-radius:50%;
-      border:1.5px solid var(--green); opacity:0.6;
-      animation:pulse 2s ease-out infinite;
-    }
-    @keyframes pulse{ 0%{ transform:scale(0.6); opacity:0.7;} 100%{ transform:scale(1.8); opacity:0; } }
-
-    .hero-blob{
-      position:absolute; border-radius:50%; pointer-events:none; filter:blur(6px);
-      animation:blobFloat 16s ease-in-out infinite;
-    }
-    .hero-blob.b1{
-      width:460px; height:460px; top:-160px; right:-160px;
-      background:radial-gradient(circle at 30% 30%, rgba(47,79,209,0.16), transparent 70%);
-    }
-    .hero-blob.b2{
-      width:340px; height:340px; bottom:-140px; left:-120px;
-      background:radial-gradient(circle at 60% 40%, rgba(199,129,30,0.14), transparent 70%);
-      animation-duration:20s; animation-delay:-4s;
-    }
-    @keyframes blobFloat{
-      0%,100%{ transform:translate(0,0) scale(1); }
-      50%{ transform:translate(-26px, 26px) scale(1.07); }
-    }
-
-    .scroll-progress-track{ position:fixed; top:56px; left:0; right:0; height:2px; background:transparent; z-index:39; pointer-events:none; }
-    .scroll-progress-bar{ height:100%; background:linear-gradient(90deg, var(--accent), var(--amber)); transition:width .12s linear; }
-
-    .back-to-top{
-      position:fixed; right:1.25rem; bottom:1.25rem; z-index:45;
-      width:44px; height:44px; border-radius:50%; background:var(--ink); color:#fff;
-      display:flex; align-items:center; justify-content:center; box-shadow:0 12px 28px -10px rgba(18,20,27,0.45);
-      opacity:0; transform:translateY(14px) scale(0.9); pointer-events:none; transition:all .3s ease; border:none; cursor:pointer;
-    }
-    .back-to-top.visible{ opacity:1; transform:translateY(0) scale(1); pointer-events:auto; }
-    .back-to-top:hover{ background:var(--accent-dark); transform:translateY(-2px) scale(1.03); }
-
-    .tab{
-      font-family:'JetBrains Mono',monospace;
-      font-size:0.78rem;
-      color:var(--muted);
-      padding:0.85rem 1rem 0.75rem;
-      border-bottom:2px solid transparent;
-      display:flex; align-items:center; gap:0.5rem;
-      transition:color .2s ease, border-color .2s ease, background .2s ease;
-      white-space:nowrap;
-    }
-    .tab:hover{ color:var(--ink); background:rgba(0,0,0,0.02); }
-    .tab.active{ color:var(--ink); border-color:var(--accent); background:var(--surface); }
-    .tab .dot{ width:6px; height:6px; border-radius:50%; background:var(--line-strong); }
-    .tab.active .dot{ background:var(--amber); }
-
-    .mobile-menu-enter-active, .mobile-menu-leave-active{ transition:opacity .18s ease, transform .18s ease; }
-    .mobile-menu-enter-from, .mobile-menu-leave-to{ opacity:0; transform:translateY(-6px); }
-
-    /* Laptop Frame Styles */
-    .laptop-wrapper {
-      position: relative;
-      margin: 0 auto;
-      width: 100%;
-      max-width: 580px;
-    }
-    .laptop-screen {
-      background: #101217; /* Darker bezel */
-      border: 1px solid var(--code-line);
-      border-radius: 14px 14px 0 0;
-      padding: 14px 14px 20px 14px;
-      position: relative;
-      box-shadow: 0 24px 60px -15px rgba(18,20,27,0.5);
-    }
-    .laptop-screen::after {
-      /* Webcam dot */
-      content: '';
-      position: absolute;
-      top: 6px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: #08090b;
-      border: 1px solid #23262f;
-    }
-    .laptop-base {
-      position: relative;
-      height: 14px;
-      background: linear-gradient(to bottom, var(--surface-2), var(--line-strong));
-      border: 1px solid var(--line-strong);
-      border-top: none;
-      border-radius: 0 0 16px 16px;
-      display: flex;
-      justify-content: center;
-      z-index: 2;
-    }
-    .laptop-base::before {
-      /* Opening notch */
-      content: '';
-      width: 70px;
-      height: 5px;
-      background: var(--line-strong);
-      border-radius: 0 0 4px 4px;
-      box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
-    }
-    .laptop-base::after {
-      /* Drop shadow cast on the table */
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      left: 4%;
-      width: 92%;
-      height: 10px;
-      background: radial-gradient(ellipse at center, rgba(18,20,27,0.3) 0%, rgba(18,20,27,0) 70%);
-      z-index: -1;
-    }
-
-    /* Terminal adjustments to sit inside the laptop */
-    .terminal {
-      background: var(--code-bg);
-      border-radius: 6px; /* Tighter radius for inner screen */
-      overflow: hidden;
-      border: 1px solid #000; /* Sharp inner screen edge */
-      box-shadow: inset 0 0 12px rgba(0,0,0,0.4);
-    }
-    .terminal-bar{
-      display:flex; align-items:center; gap:8px;
-      padding:0.7rem 1rem;
-      background:var(--code-panel);
-      border-bottom:1px solid var(--code-line);
-    }
-    .tl-dot{ width:10px; height:10px; border-radius:50%; }
-    .terminal-body{
-      padding:1.5rem 1.4rem 1.8rem;
-      font-family:'JetBrains Mono',monospace;
-      font-size:0.86rem;
-      min-height:230px;
-    }
-    .term-line{ margin-bottom:0.9rem; }
-    .term-prompt{ color:var(--code-blue); }
-    .term-prompt::before{ content:'$ '; color:var(--code-muted); }
-    .term-output{ color:var(--code-text); display:block; margin-top:0.35rem; padding-left:0; }
-    .term-output.ok::before{ content:'> '; color:var(--code-green); }
-
-    .btn{
-      font-family:'JetBrains Mono',monospace;
-      font-size:0.82rem;
-      font-weight:500;
-      border-radius:8px;
-      padding:0.7rem 1.3rem;
-      display:inline-flex; align-items:center; gap:0.5rem;
-      transition:all .2s ease;
-      position:relative; overflow:hidden;
-    }
-    .btn-solid{ background:var(--ink); color:#fff; border:1px solid var(--ink); }
-    .btn-solid:hover{ background:var(--accent-dark); border-color:var(--accent-dark); transform:translateY(-1px); }
-    .btn-ghost{ background:transparent; color:var(--ink); border:1px solid var(--line-strong); }
-    .btn-ghost:hover{ border-color:var(--accent); color:var(--accent-dark); background:var(--accent-soft); }
-
-    .commit-row{ position:relative; padding-left:1.6rem; padding-bottom:1.5rem; }
-    .commit-row:last-child{ padding-bottom:0; }
-    .commit-row::before{
-      content:''; position:absolute; left:4px; top:6px; bottom:-2px; width:1.5px; background:var(--line);
-    }
-    .commit-row:last-child::before{ display:none; }
-    .commit-dot{
-      position:absolute; left:0; top:4px; width:9px; height:9px; border-radius:50%;
-      background:var(--surface); border:2px solid var(--accent);
-    }
-    .commit-hash{ font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--amber); background:var(--amber-soft); padding:0.1rem 0.45rem; border-radius:5px; }
-
-    .dep-card{ background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:1.2rem 1.3rem; }
-    .dep-row{ display:flex; align-items:center; justify-content:space-between; padding:0.5rem 0.4rem; margin:0 -0.4rem; border-bottom:1px solid var(--line); font-family:'JetBrains Mono',monospace; font-size:0.82rem; border-radius:6px; transition:background .2s ease; }
-    .dep-row:hover{ background:var(--surface-2); }
-    .dep-row:last-child{ border-bottom:none; }
-    .dep-name{ display:flex; align-items:center; gap:0.55rem; color:var(--ink); }
-    .dep-dot{ width:9px; height:9px; border-radius:50%; flex-shrink:0; }
-    .dep-tag{ color:var(--muted); font-size:0.72rem; }
-
-    .repo-card{
-      background:var(--surface); border:1px solid var(--line); border-radius:16px;
-      padding:1.5rem; display:flex; flex-direction:column; gap:0.9rem;
-      transition:transform .3s cubic-bezier(.23,1,.32,1), box-shadow .3s ease, border-color .3s ease;
-      position:relative; overflow:hidden;
-    }
-    .repo-card::before{
-      content:''; position:absolute; top:0; left:0; right:0; height:3px;
-      background:linear-gradient(90deg, var(--accent), var(--amber));
-      transform:scaleX(0); transform-origin:left; transition:transform .35s cubic-bezier(.23,1,.32,1);
-    }
-    .repo-card:hover::before{ transform:scaleX(1); }
-    .repo-card:hover{ transform:translateY(-5px); box-shadow:0 20px 40px -24px rgba(18,20,27,0.25); border-color:var(--line-strong); }
-    .badge-public{
-      font-family:'JetBrains Mono',monospace; font-size:0.68rem; color:var(--muted);
-      border:1px solid var(--line); border-radius:20px; padding:0.15rem 0.6rem;
-    }
-    .lang-tag{ display:inline-flex; align-items:center; gap:0.4rem; font-size:0.76rem; color:var(--ink-soft); font-family:'JetBrains Mono',monospace; }
-    .lang-dot{ width:8px; height:8px; border-radius:50%; }
-
-    .eyebrow{
-      font-family:'JetBrains Mono',monospace; font-size:0.76rem; letter-spacing:0.02em;
-      color:var(--accent-dark); display:flex; align-items:center; gap:0.5rem; margin-bottom:0.9rem;
-    }
-    .eyebrow::before{ content:'//'; color:var(--muted); }
-
-    h1,h2,h3{ font-family:'JetBrains Mono',monospace; letter-spacing:-0.01em; color:var(--ink); }
-
-    .reveal{ opacity:0; transform:translateY(24px); transition:opacity .7s cubic-bezier(.23,1,.32,1), transform .7s cubic-bezier(.23,1,.32,1); }
-    .reveal.visible{ opacity:1; transform:translateY(0); }
-    .reveal-scale{ opacity:0; transform:scale(0.96); transition:opacity .6s cubic-bezier(.23,1,.32,1), transform .6s cubic-bezier(.23,1,.32,1); }
-    .reveal-scale.visible{ opacity:1; transform:scale(1); }
-    .stagger-1{ transition-delay:.05s; } .stagger-2{ transition-delay:.1s; } .stagger-3{ transition-delay:.15s; }
-    .stagger-4{ transition-delay:.2s; } .stagger-5{ transition-delay:.25s; } .stagger-6{ transition-delay:.3s; }
-
-    .tw-el{ display:inline-block; min-height:1.2em; }
-    .tw-caret::after{
-      content:''; display:inline-block; width:2px; height:0.85em; background:currentColor;
-      margin-left:2px; vertical-align:-2px; animation:blink 0.9s steps(1) infinite;
-    }
-
-    .avatar-tab{
-      display:inline-flex; align-items:center; gap:0.5rem;
-      font-family:'JetBrains Mono',monospace; font-size:0.72rem;
-      color:var(--code-muted); background:var(--code-panel);
-      border:1px solid var(--code-line); border-bottom:none;
-      border-radius:8px 8px 0 0;
-      padding:0.4rem 0.8rem;
-      width:fit-content;
-    }
-    .avatar-tab .dot{ width:5px; height:5px; border-radius:50%; background:var(--green); }
-    .avatar-frame{
-      position:relative;
-      width:104px; height:104px;
-      border-radius:0 12px 12px 12px;
-      overflow:hidden;
-      background:var(--code-bg);
-      border:1px solid var(--code-line);
-      box-shadow:0 14px 30px -14px rgba(18,20,27,0.4), 0 0 0 4px var(--accent-soft);
-      transition:box-shadow .3s ease, transform .3s ease;
-    }
-    .avatar-frame:hover{ transform:translateY(-2px); box-shadow:0 18px 36px -14px rgba(18,20,27,0.5), 0 0 0 4px var(--accent-soft); }
-    .avatar-frame img{ width:100%; height:100%; object-fit:cover; display:block; }
-    .avatar-fallback{
-      width:100%; height:100%; display:flex; align-items:center; justify-content:center;
-      font-family:'JetBrains Mono',monospace; font-weight:700; font-size:1.9rem;
-      color:var(--accent); background:linear-gradient(135deg, var(--accent-soft), var(--surface-2));
-    }
-
-    @media (prefers-reduced-motion: reduce){
-      .reveal, .reveal-scale{ opacity:1 !important; transform:none !important; transition:none !important; }
-      .dot-blink, .cursor-bar, .pulse-dot::after, .hero-blob, .tw-caret::after{ animation:none !important; }
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="John Paul Corre is a full-stack developer from Manila, building thoughtful web experiences with PHP, Vue, TypeScript and Python. Explore projects and get in touch." />
+  <meta name="theme-color" content="#101312" />
+  <title>John Paul Corre — Full-Stack Developer</title>
+  <script>
+    try {
+      const savedTheme = localStorage.getItem('corre-theme');
+      if (savedTheme === 'light' || savedTheme === 'dark') document.documentElement.dataset.theme = savedTheme;
+      document.querySelector('meta[name="theme-color"]').content = document.documentElement.dataset.theme === 'light' ? '#f5f6f0' : '#101312';
+    } catch (_) {}
+  </script>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <script defer src="app.js"></script>
 </head>
 <body>
-<div id="app">
-
-  <!-- NAV -->
-  <nav class="fixed top-0 left-0 right-0 z-40 backdrop-blur-md" style="background:rgba(245,246,244,0.88); border-bottom:1px solid var(--line);">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 flex items-center justify-between h-14">
-      <div class="flex items-center gap-1.5 font-display font-semibold text-sm text-[color:var(--ink)]">
-        <span>corre<span style="color:var(--accent)">.</span>dev</span>
-        <span class="cursor-bar"></span>
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="app" v-cloak>
+  <header class="site-header" :class="{ scrolled: scrollY > 16 }" @keydown.esc="closeMenu(true)">
+    <div class="container header-inner">
+      <a class="brand" href="#hero" aria-label="John Paul Corre, home" @click="closeMenu()"><span class="brand-mark" aria-hidden="true">/c</span><span>corre<span class="brand-dot">.</span>dev</span></a>
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a v-for="item in navItems" :key="item.id" :href="'#' + item.id" class="nav-link" :class="{ active: activeSection === item.id }" :aria-current="activeSection === item.id ? 'location' : undefined">{{ item.label }}</a>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-button" type="button" @click="toggleTheme" :aria-label="theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'" :title="theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'"><ui-icon :name="theme === 'dark' ? 'sun' : 'moon'"></ui-icon></button>
+        <a class="header-contact" href="#contact">Let's talk <ui-icon name="arrow-up-right"></ui-icon></a>
+        <button ref="menuToggle" class="icon-button menu-toggle" type="button" @click="mobileMenuOpen = !mobileMenuOpen" :aria-expanded="mobileMenuOpen" aria-controls="mobile-menu" :aria-label="mobileMenuOpen ? 'Close navigation' : 'Open navigation'"><ui-icon :name="mobileMenuOpen ? 'x' : 'menu'"></ui-icon></button>
       </div>
-      <div class="hidden md:flex">
-        <a v-for="item in navItems" :key="item.id" href="#" @click.prevent="scrollToSection(item.id)"
-           class="tab" :class="{active: activeSection === item.id}">
-          <span class="dot"></span>{{ item.label }}
-        </a>
-      </div>
-      <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden text-[color:var(--ink)] text-lg">
-        <i class="fas" :class="mobileMenuOpen ? 'fa-xmark' : 'fa-bars'"></i>
-      </button>
     </div>
-    <transition name="mobile-menu">
-      <div v-if="mobileMenuOpen" class="md:hidden px-4 pb-3 flex flex-col gap-1" style="background:var(--bg); border-bottom:1px solid var(--line);">
-        <a v-for="item in navItems" :key="item.id" href="#" @click.prevent="scrollToSection(item.id); mobileMenuOpen=false"
-           class="tab justify-start" :class="{active: activeSection === item.id}">
-          <span class="dot"></span>{{ item.label }}
-        </a>
-      </div>
+    <transition name="menu">
+      <nav v-if="mobileMenuOpen" id="mobile-menu" class="mobile-menu" aria-label="Mobile navigation">
+        <a v-for="item in navItems" :key="item.id" :href="'#' + item.id" :class="{ active: activeSection === item.id }" :aria-current="activeSection === item.id ? 'location' : undefined" @click="navigateMobile(item.id)">{{ item.label }}<ui-icon name="arrow-up-right"></ui-icon></a>
+      </nav>
     </transition>
-  </nav>
+    <div class="scroll-progress" :style="{ transform: 'scaleX(' + scrollProgress + ')' }" aria-hidden="true"></div>
+  </header>
 
-  <div class="scroll-progress-track">
-    <div class="scroll-progress-bar" :style="{width: scrollProgress + '%'}"></div>
-  </div>
-
-  <main class="pt-14">
-
-    <!-- HERO -->
-    <section id="hero" class="relative overflow-hidden">
-      <div class="grid-paper absolute inset-0 pointer-events-none" style="mask-image:linear-gradient(to bottom, black, transparent 85%);"></div>
-      <div class="hero-blob b1"></div>
-      <div class="hero-blob b2"></div>
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 py-16 md:py-24 relative z-10 grid md:grid-cols-2 gap-12 items-center">
-
-        <div class="reveal visible">
-          <div class="mb-6">
-            <div class="avatar-tab"><span class="dot"></span> profile.jpg</div>
-            <div class="avatar-frame">
-              <img v-if="!imgError" src="profile.jpg" alt="John Paul Corre" @error="imgError = true" />
-              <div v-else class="avatar-fallback">JP</div>
-            </div>
+  <main id="main" tabindex="-1">
+    <section id="hero" class="hero" aria-labelledby="hero-title">
+      <div class="hero-grid" aria-hidden="true"></div>
+      <div class="container portfolio-masthead"><span>Independent mind. Full-stack developer.</span><span>Manila, PH <span class="masthead-star" aria-hidden="true">✳</span> Portfolio / {{ year }}</span></div>
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <div class="availability"><span class="status-dot" aria-hidden="true"></span>Available for internship opportunities</div>
+          <div class="hero-intro"><button v-if="!imgError" class="portrait-trigger portrait-trigger-small" type="button" @click="openPortrait" aria-label="View John Paul's profile picture" aria-haspopup="dialog" aria-controls="portrait-viewer" title="Meet the person behind the code"><img src="profile.jpg" alt="" width="28" height="28" @error="imgError = true" /><span class="portrait-peek" aria-hidden="true">↗</span></button><span>Hey, I'm <strong>John Paul Corre</strong> <span aria-hidden="true">↗</span></span></div>
+          <h1 id="hero-title">A little logic.<br />A lot of <span>curiosity.</span></h1>
+          <p class="hero-description">A full-stack developer based in Manila. I turn ideas into things that work — with <strong>clean code</strong>, a curious mind, and a little attention to detail.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#projects">Explore my work <ui-icon name="arrow-up-right"></ui-icon></a>
+            <a class="button" href="#contact">Let's connect <ui-icon name="arrow-right"></ui-icon></a>
           </div>
-          <div class="inline-flex items-center gap-2 font-display text-xs px-3 py-1.5 rounded-full mb-6" style="background:var(--green-soft); color:var(--green); border:1px solid rgba(30,142,90,0.25);">
-            <span class="pulse-dot w-1.5 h-1.5 rounded-full" style="background:var(--green);"></span>
-            available for internship
-          </div>
-          <h1 class="text-4xl md:text-5xl font-bold leading-[1.1] mb-4">John Paul<br>Corre</h1>
-          <p class="text-base md:text-lg mb-2" style="color:var(--ink-soft);">
-            Full-stack developer building with <span class="font-display font-semibold" style="color:var(--ink)">PHP</span>, <span class="font-display font-semibold" style="color:var(--ink)">Vue</span>, <span class="font-display font-semibold" style="color:var(--ink)">TypeScript</span> and <span class="font-display font-semibold" style="color:var(--ink)">Python</span>.
-          </p>
-          <p class="text-sm mb-8" style="color:var(--muted); max-width:32rem;">
-            I like small, well-typed systems and interfaces that don't waste your time. Currently looking for an internship where I can ship real features.
-          </p>
-          <div class="flex flex-wrap gap-3">
-            <a href="#" @click.prevent="scrollToSection('projects')" class="btn btn-solid"><i class="fas fa-code text-xs"></i> View projects</a>
-            <a href="#" @click.prevent="scrollToSection('contact')" class="btn btn-ghost"><i class="fas fa-paper-plane text-xs"></i> Say hello</a>
+          <div class="hero-socials">
+            <a href="https://github.com/polszstack" target="_blank" rel="noopener noreferrer" aria-label="GitHub (opens in a new tab)"><ui-icon name="github"></ui-icon></a>
+            <a href="https://www.linkedin.com/in/john-paul-daiz-corre-504006398/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn (opens in a new tab)"><ui-icon name="linkedin"></ui-icon></a>
+            <a href="mailto:jvanpablo455@gmail.com" aria-label="Email John Paul"><ui-icon name="mail"></ui-icon></a>
+            <span>Always learning. Always building.</span>
           </div>
         </div>
 
-        <!-- LAPTOP COMPONENT ENCASING TERMINAL -->
-        <div class="reveal-scale visible">
-          <div class="laptop-wrapper">
-            <div class="laptop-screen">
-              <div class="terminal" ref="terminalEl">
-                <div class="terminal-bar">
-                  <span class="tl-dot" style="background:#EE6A5F;"></span>
-                  <span class="tl-dot" style="background:#F5BD4F;"></span>
-                  <span class="tl-dot" style="background:#61C454;"></span>
-                  <span class="font-display ml-2" style="color:var(--code-muted); font-size:0.72rem;">corre@dev — zsh</span>
-                </div>
-                <div class="terminal-body">
-                  <div class="term-line" v-for="(line, i) in displayed" :key="i">
-                    <span class="term-prompt">{{ line.prompt }}<span v-if="!line.promptDone" class="dot-blink">▍</span></span>
-                    <span v-if="line.promptDone" class="term-output ok">{{ line.output }}<span v-if="!line.outputDone" class="dot-blink">▍</span></span>
-                  </div>
-                  <div v-if="typingDone" class="term-line">
-                    <span class="term-prompt"><span class="dot-blink">▍</span></span>
-                  </div>
-                </div>
-              </div>
+        <div class="workspace-wrap">
+          <div class="workspace-orbit" aria-hidden="true"></div>
+          <span class="workspace-caption" aria-hidden="true">A peek inside my head ↴</span>
+          <div class="floating-note note-top"><span class="note-icon"><ui-icon name="code"></ui-icon></span><div><strong>Full-stack mindset</strong><small>From the interface to the API</small></div></div>
+          <div class="workspace" aria-label="Developer profile code and animated terminal">
+            <div class="window-bar"><span class="window-dot"></span><span class="window-dot"></span><span class="window-dot"></span><span class="window-title">corre / developer-workspace</span><ui-icon name="panel"></ui-icon></div>
+            <div class="editor-tabs"><span class="editor-tab selected"><span class="ts-icon">TS</span> developer.ts <ui-icon name="x"></ui-icon></span><span class="editor-tab">README.md</span></div>
+            <div class="code-content" aria-label="John Paul Corre, full-stack developer in Manila, open to opportunities">
+              <div class="code-line"><span class="line-number" aria-hidden="true">1</span><span class="code-comment">// A little about the person behind the code</span></div>
+              <div class="code-line"><span class="line-number" aria-hidden="true">2</span><span><span class="code-purple">const</span> <span class="code-blue">developer</span> = {</span></div>
+              <div class="code-line"><span class="line-number" aria-hidden="true">3</span><span>  name: <span class="code-green">'John Paul Corre'</span>,</span></div>
+              <div class="code-line"><span class="line-number" aria-hidden="true">4</span><span>  role: <span class="code-green">'Full-stack developer'</span>,</span></div>
+              <div class="code-line"><span class="line-number" aria-hidden="true">5</span><span>  location: <span class="code-green">'Manila, Philippines'</span>,</span></div>
+              <div class="code-line"><span class="line-number" aria-hidden="true">6</span><span>  stack: [<span class="code-green">'PHP'</span>, <span class="code-green">'Vue'</span>, <span class="code-green">'TypeScript'</span>,</span></div>
+              <div class="code-line"><span class="line-number" aria-hidden="true">7</span><span>          <span class="code-green">'Python'</span>, <span class="code-green">'MySQL'</span>],</span></div>
+              <div class="code-line"><span class="line-number" aria-hidden="true">8</span><span>  openToWork: <span class="code-yellow">true</span>,</span></div>
+              <div class="code-line"><span class="line-number" aria-hidden="true">9</span><span>  mindset: <span class="code-green">'Build. Learn. Improve.'</span></span></div>
+              <div class="code-line"><span class="line-number" aria-hidden="true">10</span><span>};</span></div>
+              <div class="code-line"><span class="line-number" aria-hidden="true">11</span><span></span></div>
+              <div class="code-line"><span class="line-number" aria-hidden="true">12</span><span><span class="code-purple">export default</span> <span class="code-blue">developer</span>;</span></div>
             </div>
-            <div class="laptop-base"></div>
+            <div class="terminal">
+              <div class="terminal-heading"><span>TERMINAL</span><button class="terminal-replay" type="button" @click="runTerminal" :disabled="terminalRunning" aria-label="Replay terminal animation" title="Replay animation"><ui-icon name="refresh"></ui-icon></button></div>
+              <div class="terminal-command" aria-hidden="true"><span>❯</span><div>{{ terminalText }}<span class="caret"></span></div></div>
+              <p class="terminal-output" aria-hidden="true">{{ terminalComplete ? '✓ Ready to build something meaningful.' : ' ' }}</p>
+              <span class="sr-only">npm run build: Ready to build something meaningful.</span>
+            </div>
+            <div class="editor-status"><ui-icon name="branch"></ui-icon><span>main*</span><span>UTF-8 · TypeScript</span></div>
           </div>
+          <div class="floating-note note-bottom"><span class="note-icon"><ui-icon name="globe"></ui-icon></span><div><strong>Manila, Philippines</strong><small>{{ manilaTime }} PHT · Remote friendly</small></div></div>
         </div>
-
+      </div>
+      <div class="container hero-bottom">
+        <a class="scroll-hint" href="#projects"><ui-icon name="arrow-down"></ui-icon>Scroll to explore</a>
+        <div class="tech-strip" aria-label="Core technologies"><span><span class="tech-symbol">&lt;?&gt;</span> PHP</span><span><span class="tech-symbol">V</span> Vue.js</span><span><span class="tech-symbol">TS</span> TypeScript</span><span><span class="tech-symbol">{ }</span> Python</span><span><span class="tech-symbol">⌘</span> MySQL</span></div>
       </div>
     </section>
 
-    <!-- ABOUT -->
-    <section id="about" class="py-20 border-t" style="border-color:var(--line);">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6">
-        <div class="eyebrow reveal"><span v-typewriter>about</span></div>
-        <h2 class="text-2xl md:text-3xl font-bold mb-10 reveal"><span v-typewriter>A bit about me</span></h2>
-        <div class="grid md:grid-cols-2 gap-12">
-          <div class="reveal">
-            <p class="mb-4">I'm a self-taught developer from Manila, working across the stack — PHP and MySQL on the backend, Vue and TypeScript on the frontend, with Python and FastAPI when a project calls for it.</p>
-            <p class="mb-6">I care about readable code and interfaces that feel obvious to use. Most of what I know came from building things end to end, breaking them, and fixing them properly instead of patching around the problem.</p>
-            <div class="dep-card">
-              <div class="dep-row"><span class="dep-name font-display"><i class="fas fa-location-dot" style="color:var(--accent);"></i> location</span><span class="dep-tag">Manila, PH — remote friendly</span></div>
-              <div class="dep-row"><span class="dep-name font-display"><i class="fas fa-graduation-cap" style="color:var(--accent);"></i> focus</span><span class="dep-tag">full-stack web development</span></div>
-              <div class="dep-row"><span class="dep-name font-display"><i class="fas fa-bolt" style="color:var(--accent);"></i> status</span><span class="dep-tag" style="color:var(--green);">open to internships</span></div>
-            </div>
-          </div>
-          <div class="reveal">
-            <p class="font-display text-xs mb-5" style="color:var(--muted);">git log --oneline --reverse</p>
-            <div>
-              <div class="commit-row" v-for="c in journey" :key="c.hash">
-                <span class="commit-dot"></span>
-                <div class="flex items-center gap-2 mb-1">
-                  <span class="commit-hash">{{ c.hash }}</span>
-                  <span class="font-display text-xs" style="color:var(--muted);">{{ c.date }}</span>
-                </div>
-                <p class="text-sm" style="color:var(--ink-soft); margin:0;">{{ c.message }}</p>
-              </div>
-            </div>
-          </div>
+    <section id="projects" class="section" aria-labelledby="projects-title" tabindex="-1" data-chapter="01">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div><div class="section-kicker"><span>01 /</span> Selected projects</div><h2 id="projects-title">From “what if”<br />to <em>here it is.</em></h2><p>A few things I've built to explore, solve problems, and get better at what I do.</p></div>
+          <a class="text-link" href="https://github.com/polszstack" target="_blank" rel="noopener noreferrer">More on GitHub <ui-icon name="arrow-up-right"></ui-icon></a>
         </div>
+        <div class="project-toolbar reveal">
+          <div class="filter-list" role="group" aria-label="Filter projects"><button v-for="filter in filters" :key="filter.id" type="button" class="filter-button" :class="{active: activeFilter === filter.id}" :aria-pressed="activeFilter === filter.id" @click="activeFilter = filter.id">{{ filter.label }}<span>{{ filterCount(filter.id) }}</span></button></div>
+          <span class="project-count" role="status">{{ filteredProjects.length.toString().padStart(2, '0') }} projects / built with curiosity</span>
+        </div>
+        <transition-group name="project" tag="div" class="project-grid">
+          <article v-for="project in filteredProjects" :key="project.id" class="project-card" :class="'project-' + project.art">
+            <div class="project-art" :class="'art-' + project.art" aria-hidden="true">
+              <span class="art-label">{{ project.artLabel }}</span><span class="art-concept">UI concept</span>
+              <div v-if="project.art === 'weather'" class="weather-visual"><div><div class="weather-city">↗ Manila, PH</div><div class="weather-temp">28<sup>°</sup></div><div class="weather-caption">A little sunshine for your day.</div></div><div class="weather-icon"><div class="weather-sun"></div><div class="weather-cloud"></div></div></div>
+              <div v-else-if="project.art === 'music'" class="music-visual"><div class="vinyl"></div><div class="music-info"><small>PRESS PLAY. TUNE OUT.</small><strong>In the flow.</strong><div class="waveform"><i v-for="(height, n) in waveHeights" :key="n" :style="{'--bar': height + 'px', '--delay': (n * -.13) + 's'}"></i></div><div class="music-track"></div></div></div>
+              <div v-else-if="project.art === 'quiz'" class="quiz-visual"><small>THE NEXT CHALLENGE</small><strong>Stay curious.</strong><div class="quiz-answer">Keep on learning <ui-icon name="check"></ui-icon></div></div>
+              <div v-else-if="project.art === 'photo'" class="photo-visual"><div class="photo-strip"><i></i><i></i><i></i></div><div class="photo-strip"><i></i><i></i><i></i></div></div>
+              <div v-else class="todo-visual"><strong>Make room for what matters.</strong><div class="todo-item done"><span class="todo-box"><ui-icon name="check"></ui-icon></span>Start with an idea</div><div class="todo-item done"><span class="todo-box"><ui-icon name="check"></ui-icon></span>Build something useful</div><div class="todo-item"><span class="todo-box"></span>Keep making it better</div></div>
+            </div>
+            <div class="project-body">
+              <div class="project-title-row"><h3>{{ project.title }}</h3><span class="project-number">{{ project.id.toString().padStart(2, '0') }} ↗</span></div>
+              <p>{{ project.description }}</p>
+              <div class="tag-list"><span class="tag" v-for="tag in project.tags" :key="tag">{{ tag }}</span></div>
+              <div class="project-links"><a :href="project.link" target="_blank" rel="noopener noreferrer" :aria-label="'View ' + project.title + ' live demo (opens in a new tab)'">Live demo <ui-icon name="arrow-up-right"></ui-icon></a><a :href="project.github" target="_blank" rel="noopener noreferrer" :aria-label="'View source for ' + project.title + ' on GitHub (opens in a new tab)'"><ui-icon name="github"></ui-icon>Source code</a></div>
+            </div>
+          </article>
+        </transition-group>
       </div>
     </section>
 
-    <!-- TECH STACK -->
-    <section id="techstack" class="py-20 border-t" style="border-color:var(--line); background:var(--surface-2);">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6">
-        <div class="eyebrow reveal"><span v-typewriter>stack.json</span></div>
-        <h2 class="text-2xl md:text-3xl font-bold mb-10 reveal"><span v-typewriter>What I build with</span></h2>
-        <div class="grid md:grid-cols-3 gap-6">
-          <div class="dep-card reveal-scale stagger-1">
-            <p class="font-display text-sm font-semibold mb-4 tw-el" v-typewriter>"languages": {</p>
-            <div v-for="t in languages" :key="t.name" class="dep-row">
-              <span class="dep-name"><span class="dep-dot" :style="{background: t.color}"></span>{{ t.name }}</span>
-              <span class="dep-tag">{{ t.tag }}</span>
-            </div>
-            <p class="font-display text-sm font-semibold mt-3">}</p>
-          </div>
-          <div class="dep-card reveal-scale stagger-2">
-            <p class="font-display text-sm font-semibold mb-4 tw-el" v-typewriter>"frameworks": {</p>
-            <div v-for="t in frameworks" :key="t.name" class="dep-row">
-              <span class="dep-name"><span class="dep-dot" :style="{background: t.color}"></span>{{ t.name }}</span>
-              <span class="dep-tag">{{ t.tag }}</span>
-            </div>
-            <p class="font-display text-sm font-semibold mt-3">}</p>
-          </div>
-          <div class="dep-card reveal-scale stagger-3">
-            <p class="font-display text-sm font-semibold mb-4 tw-el" v-typewriter>"tools": {</p>
-            <div v-for="t in tools" :key="t.name" class="dep-row">
-              <span class="dep-name"><span class="dep-dot" :style="{background: t.color}"></span>{{ t.name }}</span>
-              <span class="dep-tag">{{ t.tag }}</span>
-            </div>
-            <p class="font-display text-sm font-semibold mt-3">}</p>
-          </div>
+    <section id="about" class="section about-section" aria-labelledby="about-title" tabindex="-1" data-chapter="02">
+      <div class="container">
+        <div class="about-layout">
+          <div class="about-copy reveal"><div class="section-kicker"><span>02 /</span> Behind the code</div><h2 id="about-title">A builder at heart.<br />A learner, always.</h2><p>I'm a self-taught developer from <strong>Manila, Philippines</strong>, working across the stack — PHP and MySQL on the backend, Vue and TypeScript on the frontend, with Python and FastAPI when a project calls for it.</p><p>Most of what I know came from building things end to end, breaking them, and figuring out why. I care about <strong>readable code and interfaces that feel obvious to use.</strong></p><div class="profile-card"><button v-if="!imgError" class="portrait-trigger" type="button" @click="openPortrait" aria-label="View John Paul's profile picture" aria-haspopup="dialog" aria-controls="portrait-viewer"><img class="profile-image" src="profile.jpg" alt="" width="53" height="53" loading="lazy" @error="imgError = true" /><span class="portrait-peek" aria-hidden="true">&#8599;</span></button><div v-else class="profile-image avatar-fallback">JP</div><div><strong>John Paul Corre</strong><p><ui-icon name="map-pin"></ui-icon> Manila, PH · Open to remote work</p><button class="portrait-text-trigger" type="button" @click="openPortrait" aria-haspopup="dialog" aria-controls="portrait-viewer">Open my portrait <span aria-hidden="true">&#8599;</span></button></div></div></div>
+          <div class="journey reveal" style="--reveal-delay: 100ms"><div class="journey-heading"><ui-icon name="branch"></ui-icon><span>The journey so far</span><span>git log</span></div><div class="journey-item" v-for="(item, index) in journey" :key="index"><time :datetime="item.date">{{ item.date }}</time><p>{{ item.message }}</p></div></div>
         </div>
+        <div class="about-values"><div class="value-item reveal"><ui-icon name="code"></ui-icon><h3>Keep it clear</h3><p>Readable code and thoughtful interfaces. The little details make a difference.</p></div><div class="value-item reveal" style="--reveal-delay: 80ms"><ui-icon name="layers"></ui-icon><h3>Think end to end</h3><p>From the database to the last interaction, I like understanding how it all fits.</p></div><div class="value-item reveal" style="--reveal-delay: 160ms"><ui-icon name="sparkles"></ui-icon><h3>Stay curious</h3><p>Every project is a chance to ask better questions and learn something new.</p></div></div>
       </div>
     </section>
 
-    <!-- PROJECTS (includes new Todo app) -->
-    <section id="projects" class="py-20 border-t" style="border-color:var(--line);">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6">
-        <div class="eyebrow reveal"><span v-typewriter>projects/</span></div>
-        <h2 class="text-2xl md:text-3xl font-bold mb-10 reveal"><span v-typewriter>Featured work</span></h2>
-        <div class="grid md:grid-cols-2 gap-6">
-          <div v-for="(p, i) in projects" :key="p.id" class="repo-card reveal-scale" :class="'stagger-' + (i+1)">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-2.5">
-                <i class="fas fa-folder-open" style="color:var(--accent);"></i>
-                <span class="font-display font-semibold text-base">{{ p.title }}</span>
-              </div>
-              <span class="badge-public">public</span>
-            </div>
-            <p class="text-sm" style="margin:0;">{{ p.description }}</p>
-            <div class="flex flex-wrap gap-3 pt-1">
-              <span v-for="tag in p.tags" :key="tag.name" class="lang-tag">
-                <span class="lang-dot" :style="{background: tag.color}"></span>{{ tag.name }}
-              </span>
-            </div>
-            <div class="flex items-center justify-between pt-3 mt-auto" style="border-top:1px solid var(--line);">
-              <a :href="p.link" target="_blank" class="text-sm font-display font-medium flex items-center gap-1.5" style="color:var(--accent-dark);">
-                live demo <i class="fas fa-arrow-right text-xs"></i>
-              </a>
-              <a :href="p.github" target="_blank" class="text-sm flex items-center gap-1.5" style="color:var(--muted);">
-                <i class="fab fa-github"></i> source
-              </a>
-            </div>
-          </div>
-        </div>
+    <section id="techstack" class="section" aria-labelledby="stack-title" tabindex="-1" data-chapter="03">
+      <div class="container">
+        <div class="section-heading reveal"><div><div class="section-kicker"><span>03 /</span> My toolkit</div><h2 id="stack-title">The right tools. Good foundations.</h2><p>Languages, frameworks, and tools I reach for to bring an idea to life.</p></div></div>
+        <div class="stack-grid"><div v-for="(group, index) in stackGroups" :key="group.title" class="stack-card reveal" :style="{'--reveal-delay': (index * 80) + 'ms'}"><h3><ui-icon :name="group.icon"></ui-icon>{{ group.title }}<span>{{ group.items.length.toString().padStart(2, '0') }}</span></h3><div class="stack-row" v-for="item in group.items" :key="item.name"><span class="stack-token" aria-hidden="true">{{ item.symbol }}</span><span>{{ item.name }}</span><small>{{ item.tag }}</small></div></div></div>
+        <p class="stack-footnote reveal"><ui-icon name="sparkles"></ui-icon>The toolkit keeps growing. There's always something new to learn.</p>
       </div>
     </section>
 
-    <!-- CONTACT -->
-    <section id="contact" class="py-20 border-t" style="border-color:var(--line); background:var(--surface-2);">
-      <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center">
-        <div class="eyebrow justify-center reveal"><span v-typewriter>contact.sh</span></div>
-        <h2 class="text-2xl md:text-3xl font-bold mb-4 reveal"><span v-typewriter>Let's build something</span></h2>
-        <p class="mb-10 reveal" style="max-width:32rem; margin-left:auto; margin-right:auto;">
-          I'm eager to contribute to a real engineering team, whether it's PHP, Vue, TypeScript or Python on the ticket.
-        </p>
-        <div class="dep-card reveal-scale text-left" style="max-width:26rem; margin:0 auto;">
-          <p class="font-display text-xs mb-4" style="color:var(--muted);">$ ./contact.sh --run</p>
-          <div class="dep-row"><span class="dep-name font-display"><i class="fas fa-envelope" style="color:var(--accent);"></i> email</span><span class="dep-tag">jvanpablo455@gmail.com</span></div>
-          <div class="dep-row"><span class="dep-name font-display"><i class="fas fa-location-dot" style="color:var(--accent);"></i> based in</span><span class="dep-tag">Manila, PH</span></div>
-          <a href="mailto:jvanpablo455@gmail.com" class="btn btn-solid w-full justify-center mt-5">
-            <i class="fas fa-paper-plane text-xs"></i> send email
-          </a>
-          <div class="flex justify-center gap-6 mt-6 text-lg" style="color:var(--muted);">
-            <a href="https://github.com/polszstack" target="_blank" class="hover:text-[color:var(--ink)] transition-colors"><i class="fab fa-github"></i></a>
-            <a href="https://www.linkedin.com/in/john-paul-daiz-corre-504006398/" target="_blank" class="hover:text-[color:var(--ink)] transition-colors"><i class="fab fa-linkedin"></i></a>
-            <a href="https://www.freecodecamp.org/polsz" target="_blank" class="hover:text-[color:var(--ink)] transition-colors"><i class="fab fa-free-code-camp"></i></a>
-          </div>
-        </div>
-      </div>
+    <section id="contact" class="section contact-section" aria-labelledby="contact-title" tabindex="-1" data-chapter="04">
+      <div class="container"><div class="contact-panel reveal">
+        <div class="contact-copy"><div class="section-kicker"><span>04 /</span> What's next?</div><h2 id="contact-title">Good things start<br />with <span>a conversation.</span></h2><p>Have an internship opportunity, an interesting project, or just want to say hello? I'd love to hear from you.</p></div>
+        <div class="contact-options"><div class="availability"><span class="status-dot" aria-hidden="true"></span>Open to new opportunities</div><a class="email-address" href="mailto:jvanpablo455@gmail.com">jvanpablo455@gmail.com <ui-icon name="arrow-up-right"></ui-icon></a><div class="contact-buttons"><a class="button button-primary" href="mailto:jvanpablo455@gmail.com">Say hello <ui-icon name="mail"></ui-icon></a><button class="button" type="button" @click="copyEmail"><ui-icon :name="copied ? 'check' : 'copy'"></ui-icon>{{ copied ? 'Copied!' : 'Copy email' }}</button></div><p class="copy-feedback" role="status">{{ copyMessage || 'Based in Manila. Happy to work from anywhere.' }}</p></div>
+      </div></div>
     </section>
-
   </main>
 
-  <footer class="py-6 text-center text-xs font-display" style="color:var(--muted); border-top:1px solid var(--line);">
-    <div class="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-2">
-      <p>© 2025 John Paul Corre — built with Vue &amp; Tailwind</p>
-      <p>PHP · Python · TypeScript · MySQL</p>
+  <footer class="footer"><div class="container"><div class="footer-inner"><p>© {{ year }} John Paul Corre</p><div class="footer-links"><a href="https://github.com/polszstack" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="https://www.linkedin.com/in/john-paul-daiz-corre-504006398/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="https://www.freecodecamp.org/polsz" target="_blank" rel="noopener noreferrer">freeCodeCamp ↗</a></div></div><p class="footer-note">Made with Vue, a little patience, and a lot of curiosity.</p></div></footer>
+  <dialog id="portrait-viewer" ref="portraitDialog" class="portrait-dialog" aria-labelledby="portrait-title" aria-describedby="portrait-description" @click="dismissPortraitBackdrop" @close="onPortraitClosed">
+    <div class="portrait-postcard">
+      <div class="portrait-topline"><span>Field notes / the person</span><button class="portrait-close icon-button" type="button" @click="closePortrait" aria-label="Close profile picture" autofocus><ui-icon name="x"></ui-icon></button></div>
+      <figure class="portrait-print">
+        <div class="portrait-photo"><img v-if="!portraitError" src="profile.jpg" alt="Portrait of John Paul Corre" width="200" height="200" @error="portraitError = true" /><p v-else class="portrait-error">The photo couldn't load.<br />Please close and try again.</p></div>
+        <figcaption>The human behind the code.</figcaption>
+        <span class="portrait-stamp" aria-hidden="true">MANILA<br /><span>✳</span><br />PHILIPPINES</span>
+      </figure>
+      <div class="portrait-signature"><div><h2 id="portrait-title">John Paul Corre</h2><p id="portrait-description">A curious mind. A builder at heart.</p></div><span aria-hidden="true">/jp</span></div>
+      <p class="portrait-location"><ui-icon name="map-pin"></ui-icon> Manila, Philippines <span>Always learning. Always building.</span></p>
     </div>
-  </footer>
-
-  <button class="back-to-top" :class="{visible: showBackToTop}" @click="scrollToSection('hero')" aria-label="Back to top">
-    <i class="fas fa-arrow-up text-sm"></i>
-  </button>
-
+  </dialog>
+  <nav class="chapter-nav" aria-label="Portfolio chapters">
+    <a href="#hero" class="chapter-home" :class="{ active: activeSection === 'hero' }" :aria-current="activeSection === 'hero' ? 'location' : undefined" aria-label="Introduction"><span aria-hidden="true">✳</span></a>
+    <a v-for="(item, index) in navItems" :key="item.id" :href="'#' + item.id" :class="{ active: activeSection === item.id }" :aria-current="activeSection === item.id ? 'location' : undefined"><span class="chapter-number" aria-hidden="true">{{ (index + 1).toString().padStart(2, '0') }}</span><span>{{ item.label }}</span></a>
+  </nav>
 </div>
-
-<script>
-const { createApp } = Vue;
-
-createApp({
-  data(){
-    return {
-      mobileMenuOpen: false,
-      activeSection: 'hero',
-      imgError: false,
-      scrollProgress: 0,
-      showBackToTop: false,
-      navItems: [
-        { id:'about', label:'about.md' },
-        { id:'techstack', label:'stack.json' },
-        { id:'projects', label:'projects/' },
-        { id:'contact', label:'contact.sh' }
-      ],
-      bootLines: [
-        { prompt:'whoami', output:'John Paul Corre' },
-        { prompt:'cat role.txt', output:'Full-stack developer — PHP · Vue · TypeScript · Python' },
-        { prompt:'status --check', output:'Open to internship opportunities' }
-      ],
-      displayed: [],
-      typingDone: false,
-      terminalToken: 0,
-      journey: [
-        { hash:'a1b2c3d', date:'2022', message:'Started learning HTML, CSS and JavaScript fundamentals.' },
-        { hash:'e4f5a6b', date:'2023', message:'Built first PHP backends and worked with MySQL.' },
-        { hash:'i7c8d9e', date:'2023', message:'Picked up Vue.js and TypeScript for frontend work.' },
-        { hash:'m1n2o3p', date:'2024', message:'Added Python and FastAPI, explored full-stack architecture.' },
-        { hash:'q4r5s6t', date:'2025', message:'Shipping personal projects, open to internship roles.' }
-      ],
-      languages: [
-        { name:'PHP', color:'#8892BF', tag:'backend' },
-        { name:'JavaScript', color:'#D4B106', tag:'frontend' },
-        { name:'TypeScript', color:'#3178C6', tag:'frontend' },
-        { name:'Python', color:'#3776AB', tag:'backend' },
-        { name:'HTML / CSS', color:'#E44D26', tag:'markup' }
-      ],
-      frameworks: [
-        { name:'Vue.js', color:'#41B883', tag:'frontend' },
-        { name:'Express.js', color:'#6E6E6E', tag:'backend' },
-        { name:'Next.js', color:'#000000', tag:'backend' },
-        { name:'FastAPI', color:'#05998B', tag:'backend' },
-        { name:'Tailwind CSS', color:'#38BDF8', tag:'styling' },
-        { name:'Bootstrap', color:'#7952B3', tag:'styling' }
-      ],
-      tools: [
-        { name:'Node.js', color:'#3C873A', tag:'runtime' },
-        { name:'MySQL', color:'#4479A1', tag:'database' },
-        { name:'Git', color:'#F05032', tag:'versioning' }
-      ],
-      projects: [
-        {
-          id:1, title:'weather-dashboard',
-          description:'JavaScript app fetching a weather API, with a PHP proxy to keep keys secure and CSS-driven animation.',
-          tags:[{name:'JavaScript', color:'#D4B106'},{name:'PHP', color:'#8892BF'},{name:'API', color:'#3178C6'}],
-          link:'https://polszstack.github.io/Weather-WebApp/', github:'https://github.com/polszstack/Weather-WebApp'
-        },
-        {
-          id:2, title:'music-player',
-          description:'Interactive player with playlist support, audio controls, dynamic track loading and a responsive UI.',
-          tags:[{name:'JavaScript', color:'#D4B106'},{name:'HTML', color:'#E44D26'},{name:'Audio API', color:'#41B883'}],
-          link:'https://polszstack.github.io/Music-Player/', github:'https://github.com/polszstack/Music-Player'
-        },
-        {
-          id:3, title:'quiz-bee',
-          description:'Multi-category quiz app with score tracking and dynamic question loading, built on Vue and TypeScript.',
-          tags:[{name:'TypeScript', color:'#3178C6'},{name:'Vue.js', color:'#41B883'}],
-          link:'https://polszstack.github.io/Quiz-Bee/', github:'https://github.com/polszstack/Quiz-Bee'
-        },
-        {
-          id:4, title:'photo-booth',
-          description:'Full-stack photo booth built with Vue, Express and TypeScript — snap, filter and share instantly.',
-          tags:[{name:'Vue.js', color:'#41B883'},{name:'Express.js', color:'#6E6E6E'},{name:'TypeScript', color:'#3178C6'}],
-          link:'https://photo-booth-clean.vercel.app/', github:'https://github.com/polszstack/Photo-Booth'
-        },
-        // ----- NEW Todo App (Next.js, React, TypeScript) -----
-        {
-          id:5, title:'todo-list-app',
-          description:'Full-featured todo list built with Next.js, React and TypeScript — fully typed, responsive, and deployed on Vercel.',
-          tags:[{name:'Next.js', color:'#000000'},{name:'React', color:'#61DAFB'},{name:'TypeScript', color:'#3178C6'}],
-          link:'https://todo-list-app-seven-chi-94.vercel.app/',
-          github:'https://github.com/polszstack/Todo-List'
-        }
-      ]
-    }
-  },
-  directives: {
-    typewriter: {
-      mounted(el){
-        const fullText = el.textContent;
-        el.dataset.full = fullText;
-        el.textContent = '';
-        el.classList.add('tw-el');
-        let timer = null;
-        let running = false;
-        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-        const stop = () => {
-          running = false;
-          clearTimeout(timer);
-          el.classList.remove('tw-caret');
-        };
-
-        const type = () => {
-          if(reduced){ el.textContent = el.dataset.full; return; }
-          stop();
-          running = true;
-          el.textContent = '';
-          el.classList.add('tw-caret');
-          let i = 0;
-          const step = () => {
-            if(!running) return;
-            i++;
-            el.textContent = el.dataset.full.slice(0, i);
-            if(i < el.dataset.full.length){
-              timer = setTimeout(step, 20);
-            } else {
-              el.classList.remove('tw-caret');
-              running = false;
-            }
-          };
-          step();
-        };
-
-        const reset = () => {
-          stop();
-          el.textContent = '';
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if(entry.isIntersecting && entry.intersectionRatio >= 0.3){
-              type();
-            } else if(!entry.isIntersecting){
-              reset();
-            }
-          });
-        }, { threshold: [0, 0.3] });
-
-        observer.observe(el);
-        el._twObserver = observer;
-      },
-      unmounted(el){
-        if(el._twObserver) el._twObserver.disconnect();
-      }
-    }
-  },
-  methods:{
-    scrollToSection(id){
-      const el = document.getElementById(id);
-      if(el) el.scrollIntoView({ behavior:'smooth', block:'start' });
-    },
-    wait(ms){ return new Promise(r => setTimeout(r, ms)); },
-    async runTerminal(){
-      const myToken = ++this.terminalToken;
-      this.displayed = [];
-      this.typingDone = false;
-      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      for(const line of this.bootLines){
-        if(myToken !== this.terminalToken) return;
-        this.displayed.push({ prompt:'', output:'', promptDone:false, outputDone:false });
-        const idx = this.displayed.length - 1;
-        if(reduced){
-          this.displayed[idx] = { prompt:line.prompt, output:line.output, promptDone:true, outputDone:true };
-          continue;
-        }
-        for(let i=1;i<=line.prompt.length;i++){
-          if(myToken !== this.terminalToken) return;
-          this.displayed[idx].prompt = line.prompt.slice(0,i);
-          await this.wait(22);
-        }
-        if(myToken !== this.terminalToken) return;
-        this.displayed[idx].promptDone = true;
-        await this.wait(260);
-        for(let i=1;i<=line.output.length;i++){
-          if(myToken !== this.terminalToken) return;
-          this.displayed[idx].output = line.output.slice(0,i);
-          await this.wait(11);
-        }
-        if(myToken !== this.terminalToken) return;
-        this.displayed[idx].outputDone = true;
-        await this.wait(380);
-      }
-      if(myToken === this.terminalToken) this.typingDone = true;
-    },
-    setupTerminalObserver(){
-      const el = this.$refs.terminalEl;
-      if(!el) return;
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if(entry.isIntersecting && entry.intersectionRatio >= 0.35){
-            this.runTerminal();
-          }
-        });
-      }, { threshold: [0, 0.35] });
-      observer.observe(el);
-    },
-    setupScrollAnimations(){
-      const revealEls = document.querySelectorAll('.reveal, .reveal-scale');
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if(entry.isIntersecting) entry.target.classList.add('visible');
-        });
-      }, { root:null, rootMargin:'-40px 0px -40px 0px', threshold:0.05 });
-      revealEls.forEach(el => observer.observe(el));
-
-      const sections = ['hero','about','techstack','projects','contact'];
-      const navObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if(entry.isIntersecting) this.activeSection = entry.target.id;
-        });
-      }, { root:null, rootMargin:'-45% 0px -45% 0px', threshold:0 });
-      sections.forEach(id => {
-        const el = document.getElementById(id);
-        if(el) navObserver.observe(el);
-      });
-    },
-    onScroll(){
-      const doc = document.documentElement;
-      const scrollTop = doc.scrollTop || document.body.scrollTop;
-      const max = doc.scrollHeight - doc.clientHeight;
-      this.scrollProgress = max > 0 ? Math.min(100, (scrollTop / max) * 100) : 0;
-      this.showBackToTop = scrollTop > 480;
-    }
-  },
-  mounted(){
-    this.$nextTick(() => {
-      this.setupScrollAnimations();
-      this.setupTerminalObserver();
-      window.addEventListener('scroll', this.onScroll, { passive:true });
-      this.onScroll();
-    });
-  },
-  beforeUnmount(){
-    window.removeEventListener('scroll', this.onScroll);
-  }
-}).mount('#app');
-</script>
+<noscript><div class="fallback"><h1>John Paul Corre</h1><p>Full-stack developer based in Manila, Philippines. Working with PHP, Vue, TypeScript, Python, and MySQL. Open to internship opportunities.</p><p><a href="https://github.com/polszstack">Explore my projects on GitHub</a> or <a href="mailto:jvanpablo455@gmail.com">get in touch by email</a>.</p><p>Enable JavaScript to explore the full portfolio.</p></div></noscript>
+<div id="load-fallback" class="fallback" hidden><h1>John Paul Corre</h1><p>The interactive portfolio couldn't load. Please refresh to try again.</p><p>In the meantime, <a href="https://github.com/polszstack">explore my projects on GitHub</a> or <a href="mailto:jvanpablo455@gmail.com">get in touch by email</a>.</p></div>
 </body>
 </html>

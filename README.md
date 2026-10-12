@@ -1,16 +1,29 @@
 # John Paul Corre — Developer Portfolio
 
-A responsive, single-page portfolio built with **Vue 3** and **Tailwind CSS**. It introduces my background, highlights my web development skills and projects, and provides ways to get in touch. I’m a developer from Manila, Philippines, seeking internship opportunities.
+A responsive, single-page portfolio built with **Vue 3** and **custom CSS**. It introduces my background, highlights my web development skills and projects, and provides ways to get in touch. I’m a developer from Manila, Philippines, seeking internship opportunities.
 
 ## Live Portfolio
 
 [View the portfolio](https://polszstack.github.io/Portfolio/)
 
-The page includes an animated terminal-style introduction, an overview of my background, categorized technology lists, project cards, and contact links.
+The page takes the form of a developer's field journal: oversized editorial typography, handwritten-style accents, a staggered project gallery, a notebook-style learning timeline, and numbered sections. A floating chapter navigator follows your position as you explore. Dark graphite and mint colors are paired with a persistent light-mode option, subtle motion, and responsive layouts. The animated developer workspace, project filters, categorized technology lists, and contact links remain interactive. Project artwork is an illustrative UI concept rather than a screenshot of the live app.
 
 ## Technology
 
-The portfolio page uses Vue 3 for interactive elements and Tailwind CSS for layout and styling. Its terminal animation, section navigation, and visual effects are implemented in the page itself.
+The portfolio uses Vue 3 for interactive elements and custom CSS for layout and styling. There is no build step. Vue and Google Fonts load from their CDNs; icons and project illustrations are local SVG and CSS.
+
+- `index.html` — semantic page structure and Vue templates
+- `styles.css` — dark/light themes, responsive layouts, and animations
+- `app.js` — profile and project data, filters, theme persistence, terminal animation, and clipboard handling
+- `favicon.svg` — portfolio monogram
+
+Animations honor `prefers-reduced-motion`. Navigation supports keyboard focus, the mobile menu closes with Escape, and clipboard failures show an alternative way to get in touch.
+
+Click either profile photo or **Open my portrait** in the About section to view a larger picture in a postcard-style dialog. The viewer supports Escape, its close button, and clicking outside to dismiss; keyboard focus returns to the opener. The native modal keeps background controls inactive, and its entrance animation respects reduced-motion preferences.
+
+## Local preview
+
+From the repository directory, run `python -m http.server 4173` and open `http://localhost:4173`. The static files can also be served directly by GitHub Pages.
 
 The technologies I work with include:
 
